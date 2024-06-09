@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "watch": "tsc -w"
+    "watch": "python build.py"
   },
   "dependencies": {
     "@minecraft/server": "1.11.0-beta.1.20.80-stable",

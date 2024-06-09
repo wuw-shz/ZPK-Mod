@@ -1,7 +1,7 @@
 {
   "format_version": 2,
   "header": {
-    "description": "§b@Zetaser_jtz §r| §b@wuw.sh\n§rA mod for one jump practice.\n§4Need open Beta APIs\n§aUse nether star to get info\n§eYou can modify this add-on, but please indicate the original author",
+    "description": "§b@Zetaser_jtz §r| §b@wuw.sh\n§rA mod for one jump practice.\n§4Need open Beta APIs\n§aSend §f\".about\" in chat to get info\n§eYou can modify this add-on, but please indicate the original author",
     "name": "ZPK Mod v6.0.0",
     "uuid": "bbab2e80-bc5e-2cb7-73e9-6908da1ba775",
     "version": [6, 0, 0],
@@ -9,18 +9,12 @@
   },
   "modules": [
     {
-      "description": "behaviour/data modules",
-      "type": "data",
-      "uuid": "2d0f3b0f-9dd2-4712-8176-13518908bd67",
-      "version": [1, 0, 0]
-    },
-    {
       "description": "@minecraft/server | @minecraft/server-ui",
       "type": "script",
       "language": "javascript",
-      "uuid": "26fe8378-0fb2-493c-8246-cfbb7ce448e4",
+      "uuid": "fd82acf5-9efc-47c9-bc65-966eddfba8c7",
       "version": [0, 0, 1],
-      "entry": "scripts/main.js"
+      "entry": "scripts/index.js"
     }
   ],
   "dependencies": [

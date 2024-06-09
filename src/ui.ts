@@ -1,6 +1,6 @@
 import {Player, system} from '@minecraft/server';
-import {Database} from 'database';
 import * as ui from '@minecraft/server-ui';
+import {Database} from 'index';
 
 /*Setting UI*/
 
@@ -23,11 +23,15 @@ export function settingUI(player: Player) {
 export function GUIUI(player: Player) {
   run(() => {
     const db = Database(player);
-    db.beforetfac
+    db.beforetfac;
     const gui = new ui.ModalFormData();
     gui.title('GUI Setting');
     gui.slider('Pos Precition', 2, 20, 1, db.pTF);
     gui.slider('Rot Precision', 0, 20, 1, db.rTF);
+    gui.toggle(
+      `Separate GUI\n${db.separateGui ? '§8(§7yes§8/no)' : '§8(yes/§7no§8)'}`,
+      db.separateGui
+    );
     const def = (def: boolean) =>
       def ? '§8(§7show§8/hide)' : '§8(show/§7hide§8)';
     gui.toggle(`Position\n${def(db.showpos)}`, db.showpos);
@@ -47,19 +51,20 @@ export function GUIUI(player: Player) {
       if (gui.canceled) return settingUI(player);
       db.pTF = gui.formValues[0] as number;
       db.rTF = gui.formValues[1] as number;
-      db.showpos = gui.formValues[2] as boolean;
-      db.showpit = gui.formValues[3] as boolean;
-      db.showfac = gui.formValues[4] as boolean;
-      db.showja = gui.formValues[5] as boolean;
-      db.showhita = gui.formValues[6] as boolean;
-      db.showspeed = gui.formValues[7] as boolean;
-      db.showttspeed = gui.formValues[8] as boolean;
-      db.showtier = gui.formValues[9] as boolean;
-      db.showland = gui.formValues[10] as boolean;
-      db.showhit = gui.formValues[11] as boolean;
-      db.showos = gui.formValues[12] as boolean;
-      db.showpb = gui.formValues[13] as boolean;
-      db.showturn = gui.formValues[14] as boolean;
+      db.separateGui = gui.formValues[2] as boolean;
+      db.showpos = gui.formValues[3] as boolean;
+      db.showpit = gui.formValues[4] as boolean;
+      db.showfac = gui.formValues[5] as boolean;
+      db.showja = gui.formValues[6] as boolean;
+      db.showhita = gui.formValues[7] as boolean;
+      db.showspeed = gui.formValues[8] as boolean;
+      db.showttspeed = gui.formValues[9] as boolean;
+      db.showtier = gui.formValues[10] as boolean;
+      db.showland = gui.formValues[11] as boolean;
+      db.showhit = gui.formValues[12] as boolean;
+      db.showos = gui.formValues[13] as boolean;
+      db.showpb = gui.formValues[14] as boolean;
+      db.showturn = gui.formValues[15] as boolean;
     });
   });
 }
@@ -74,6 +79,7 @@ export function TextsUI(player: Player) {
     texts.textField('Labels Color\n§o§8(0-9/a-u)', '0-9/a-u', db.tc1);
     texts.textField('Value Color\n§o§8(0-9/a-u)', '0-9/a-u', db.tc2);
     texts.textField('Prefix', '<ZPK>', db.prefix);
+    texts.toggle('Send Total offset in chat', db.sendos);
     texts.toggle('Send offset x in chat', db.sendosx);
     texts.toggle('Send offset z in chat', db.sendosz);
     texts.toggle('Send Total PB in chat', db.sendpb);

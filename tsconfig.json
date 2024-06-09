@@ -12,7 +12,12 @@
       "allowJs": true,
       "rootDir": "src",
       "baseUrl": "./src",
+      "paths": {
+          "@lib/minecraft": ["@library/minecraft/Minecraft.js"]
+      }
   },
-  "exclude": [ "node_modules" ],
-  "include": [ "src" ]
+  "include": [
+      "./src",
+      "src/@library/*"    
+  ]
 }
