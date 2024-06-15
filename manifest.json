@@ -3,9 +3,9 @@
   "header": {
     "description": "§b@Zetaser_jtz §r| §b@wuw.sh\n§rA mod for one jump practice.\n§4Need open Beta APIs\n§aSend §f\".about\" in chat to get info\n§eYou can modify this add-on, but please indicate the original author",
     "name": "ZPK Mod v6.0.0",
-    "uuid": "bbab2e80-bc5e-2cb7-73e9-6908da1ba775",
+    "uuid": "0841ec08-963a-4e06-bbc5-25b2e707594d",
     "version": [6, 0, 0],
-    "min_engine_version": [1, 20, 80]
+    "min_engine_version": [1, 21, 0]
   },
   "modules": [
     {
@@ -13,14 +13,14 @@
       "type": "script",
       "language": "javascript",
       "uuid": "fd82acf5-9efc-47c9-bc65-966eddfba8c7",
-      "version": [0, 0, 1],
+      "version": [1, 0, 0],
       "entry": "scripts/index.js"
     }
   ],
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "1.11.0-beta"
+      "version": "1.12.0-beta"
     },
     {
       "module_name": "@minecraft/server-ui",

@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-      "module": "ES2020",
-      "moduleResolution": "node",
-      "target": "ES2020",
-      "lib": ["ES2020", "DOM"],
-      "allowSyntheticDefaultImports": true,
-      "noImplicitAny": true,
-      "preserveConstEnums": true,
-      "sourceMap": false,
-      "outDir": "./scripts",
-      "allowJs": true,
-      "rootDir": "src",
-      "baseUrl": "./src",
-      "paths": {
-          "@lib/minecraft": ["@library/minecraft/Minecraft.js"]
-      }
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "target": "ES2021",
+    "lib": ["ES2020", "DOM"],
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "outDir": "./scripts",
+    "allowJs": true,
+    "rootDir": "src",
+    "baseUrl": "./src",
+    "paths": {
+      "@lib/minecraft": ["@library/minecraft/Minecraft.js"]
+    }
   },
-  "include": [
-      "./src",
-      "src/@library/*"    
-  ]
+  "exclude": ["node_modules"],
+  "include": ["./src", "src/@library/*"]
 }

@@ -1,9 +1,5 @@
-import {
-  world,
-  system,
-  Player,
-} from '@minecraft/server';
-import {Database, settingUI, zpkModOn, print} from 'index';
+import {world, system, Player} from '@minecraft/server';
+import {Database, settingUI, zpkModOn, print} from './index';
 
 /*Toggle ZPK Mod*/
 
@@ -134,7 +130,11 @@ system.runInterval(() => {
       db.beforelandlb = false;
     }
     const NA = (value: string | Number) =>
-      typeof value == 'number' ? value.toFixed(db.pTF) : value;
+      typeof value == 'number'
+        ? isFinite(value)
+          ? value.toFixed(db.pTF)
+          : 'N/A'
+        : value;
     type GUI = {
       main: {labels: string[]; conditions: boolean[]};
       utils: {labels: string[]; conditions: boolean[]};
@@ -218,3 +218,14 @@ system.runInterval(() => {
     }
   }
 });
+
+// system.runInterval(() => {
+//   world.getAllPlayers().forEach(pl => {
+//     const movement = pl.getComponent('movement');
+//     movement.setCurrentValue(0.12999999523162842);
+//     pl.getVelocity().x = 0;
+//     pl.onScreenDisplay.setActionBar(
+//       movement.currentValue + '\n' + pl.isSprinting + '\n\n\n\n\n'
+//     );
+//   });
+// });

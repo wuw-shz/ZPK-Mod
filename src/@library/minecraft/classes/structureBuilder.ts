@@ -5,7 +5,7 @@ import {
   regionTransformedBounds,
   sleep,
   Vector,
-} from "../utils/index.js";
+} from '../utils/index.js';
 import {
   BlockVolume,
   Dimension,
@@ -14,9 +14,9 @@ import {
   Vector3,
   world,
   StructureCreateOptions,
-} from "@minecraft/server";
+} from '@minecraft/server';
 
-const ROT2STRUCT: { [key: number]: StructureRotation } = {
+const ROT2STRUCT: {[key: number]: StructureRotation} = {
   0: StructureRotation.None,
   90: StructureRotation.Rotate90,
   180: StructureRotation.Rotate180,
@@ -49,7 +49,7 @@ export interface StructureSaveOptions {
 
 export interface StructureLoadOptions {
   rotation?: number;
-  flip?: "none" | "x" | "z" | "xz";
+  flip?: 'none' | 'x' | 'z' | 'xz';
   importedSize?: Vector;
 }
 
@@ -84,7 +84,8 @@ class StructureManager {
           const struct = world.structureManager.createFromWorld(
             name + sub.name,
             dim,
-            new BlockVolume(min.add(sub.start), min.add(sub.end)),
+            min.add(sub.start),
+            min.add(sub.end),
             saveOptions
           );
           saved.push(struct);
@@ -96,10 +97,10 @@ class StructureManager {
       }
 
       if (error) {
-        saved.forEach((struct) => world.structureManager.delete(struct));
+        saved.forEach(struct => world.structureManager.delete(struct));
         return true;
       } else {
-        this.structures.set(name, { subRegions: subStructs, size: size });
+        this.structures.set(name, {subRegions: subStructs, size: size});
         return false;
       }
     } else {
@@ -108,11 +109,12 @@ class StructureManager {
         const struct = world.structureManager.createFromWorld(
           name,
           dim,
-          new BlockVolume(min, max),
+          min,
+          max,
           saveOptions
         );
         if (saveToDisk) struct.saveToWorld();
-        this.structures.set(name, { size });
+        this.structures.set(name, {size});
         return false;
       } catch {
         return true;
@@ -152,7 +154,8 @@ class StructureManager {
             const struct = world.structureManager.createFromWorld(
               subName,
               dim,
-              new BlockVolume(min.add(sub.start), min.add(sub.end)),
+              min.add(sub.start),
+              min.add(sub.end),
               saveOptions
             );
             saved.push(struct);
@@ -169,10 +172,10 @@ class StructureManager {
       }
 
       if (error) {
-        saved.forEach((struct) => world.structureManager.delete(struct));
+        saved.forEach(struct => world.structureManager.delete(struct));
         return true;
       } else {
-        this.structures.set(name, { subRegions: subStructs, size: size });
+        this.structures.set(name, {subRegions: subStructs, size: size});
         return false;
       }
     } else {
@@ -183,11 +186,12 @@ class StructureManager {
           const struct = world.structureManager.createFromWorld(
             name,
             dim,
-            new BlockVolume(min, max),
+            min,
+            max,
             saveOptions
           );
           if (saveToDisk) struct.saveToWorld();
-          this.structures.set(name, { size });
+          this.structures.set(name, {size});
           return false;
         } catch (err) {
           console.warn(err);
@@ -207,8 +211,8 @@ class StructureManager {
     const loadPos = Vector.from(location);
     let rot = options.rotation ?? 0;
     rot = rot >= 0 ? rot % 360 : ((rot % 360) + 360) % 360;
-    const mirror = FLIP2STRUCT[options.flip ?? "none"];
-    const loadOptions = { rotation: ROT2STRUCT[rot], mirror };
+    const mirror = FLIP2STRUCT[options.flip ?? 'none'];
+    const loadOptions = {rotation: ROT2STRUCT[rot], mirror};
 
     const struct = this.structures.get(name);
     if (
@@ -218,8 +222,8 @@ class StructureManager {
       const size = options.importedSize ?? struct.size;
       const rotation = new Vector(0, options.rotation ?? 0, 0);
       const dir_sc = Vector.ONE;
-      if (mirror.includes("X")) dir_sc.z *= -1;
-      if (mirror.includes("Z")) dir_sc.x *= -1;
+      if (mirror.includes('X')) dir_sc.z *= -1;
+      if (mirror.includes('Z')) dir_sc.x *= -1;
 
       const bounds = regionTransformedBounds(
         Vector.ZERO,
@@ -276,8 +280,8 @@ class StructureManager {
     const loadPos = Vector.from(location);
     let rot = options.rotation ?? 0;
     rot = rot >= 0 ? rot % 360 : ((rot % 360) + 360) % 360;
-    const mirror = FLIP2STRUCT[options.flip ?? "none"];
-    const loadOptions = { rotation: ROT2STRUCT[rot], mirror };
+    const mirror = FLIP2STRUCT[options.flip ?? 'none'];
+    const loadOptions = {rotation: ROT2STRUCT[rot], mirror};
 
     const struct = this.structures.get(name);
     if (
@@ -286,10 +290,10 @@ class StructureManager {
     ) {
       const size = options.importedSize ?? struct.size;
       const rotation = new Vector(0, options.rotation ?? 0, 0);
-      const flip = options.flip ?? "none";
+      const flip = options.flip ?? 'none';
       const dir_sc = Vector.ONE;
-      if (flip.includes("x")) dir_sc.z *= -1;
-      if (flip.includes("z")) dir_sc.x *= -1;
+      if (flip.includes('x')) dir_sc.z *= -1;
+      if (flip.includes('z')) dir_sc.x *= -1;
 
       const bounds = regionTransformedBounds(
         Vector.ZERO,

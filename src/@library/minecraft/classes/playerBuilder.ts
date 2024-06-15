@@ -107,7 +107,7 @@ export class PlayerBuilder {
    * @returns {?ItemStack}
    */
   getHeldItem(player: Player) {
-    return this.getInventory(player).getItem(player.selectedSlot);
+    return this.getInventory(player).getItem(player.selectedSlotIndex);
   }
 }
 
