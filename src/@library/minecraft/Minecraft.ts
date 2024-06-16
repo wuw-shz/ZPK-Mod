@@ -35,6 +35,7 @@ system.beforeEvents.watchdogTerminate.subscribe(ev => {
 });
 
 export * from './utils/index.js';
+export * as Block from './mojang-block.js';
 
 import {Player as PlayerBuilder} from './classes/playerBuilder.js';
 import {Command} from './classes/commandBuilder.js';

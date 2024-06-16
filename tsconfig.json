@@ -13,7 +13,8 @@
     "rootDir": "src",
     "baseUrl": "./src",
     "paths": {
-      "@lib/minecraft": ["@library/minecraft/Minecraft.js"]
+      "@lib/minecraft": ["@library/minecraft/Minecraft.js"],
+      "@lib/math": ["@library/math/Math.js"]
     }
   },
   "exclude": ["node_modules"],

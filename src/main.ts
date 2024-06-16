@@ -1,11 +1,15 @@
 import {world, system, Player} from '@minecraft/server';
 import {Database, settingUI, zpkModOn, print} from './index';
 
+world.afterEvents.entitySpawn.subscribe(({entity}) => {
+  const item = entity.getComponent('item').itemStack;
+  item.nameTag = `§e${item.amount}x§r ${item.nameTag}`;
+});
+
 /*Toggle ZPK Mod*/
 
 world.beforeEvents.itemUse.subscribe(data => {
   if (!zpkModOn) return;
-
   const player = data.source as Player;
   const item = data.itemStack;
   const db = Database(player);
@@ -21,7 +25,7 @@ world.beforeEvents.itemUse.subscribe(data => {
 system.runInterval(() => {
   if (!zpkModOn) return;
 
-  for (const player of world.getPlayers()) {
+  for (const player of world.getAllPlayers()) {
     const db = Database(player);
     if (!db.toggleZPKMod) {
       switch (db.idx) {
@@ -69,34 +73,34 @@ system.runInterval(() => {
     }
     if (
       pos.y <= db.lby &&
-      pos.y >= db.lby - 1 &&
       vel.y <= 0 &&
+      pos.y - vel.y > db.lby &&
       -Math.abs(pos.x - db.lbx - 0.5) + 0.8 >= -1 &&
       -Math.abs(pos.z - db.lbz - 0.5) + 0.8 >= -1 &&
       !db.beforelandlb &&
       db.lbon
     ) {
       db.beforelandlb = true;
-      db.osx = -Math.abs(pos.x - db.lbx - 0.5) + 0.8;
-      db.osz = -Math.abs(pos.z - db.lbz - 0.5) + 0.8;
+      db.osx = -Math.abs(pos.x - vel.x - db.lbx - 0.5) + 0.8;
+      db.osz = -Math.abs(pos.z - vel.z - db.lbz - 0.5) + 0.8;
       db.os =
         Math.sqrt(db.osx ** 2 + db.osz ** 2) *
         ([db.osx, db.osz].some(os => os < 0) ? -1 : 1);
       db.sendos &&
         print(
-          `§${db.tc1}§l${db.prefix}§${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`,
+          `§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`,
           player
         );
       db.sendosx &&
         print(
-          `§${db.tc1}§l${db.prefix}§${
+          `§${db.tc1}${db.prefix} §${
             db.tc2
           }Offset X: ${db.osx.toFixed(db.pTF)}`,
           player
         );
       db.sendosz &&
         print(
-          `§${db.tc1}§l${db.prefix}§${
+          `§${db.tc1}${db.prefix} §${
             db.tc2
           }Offset Z: ${db.osz.toFixed(db.pTF)}`,
           player
@@ -105,7 +109,7 @@ system.runInterval(() => {
         db.pbx = db.osx;
         db.sendpbx &&
           print(
-            `§${db.tc1}§l${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`,
+            `§${db.tc1}${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`,
             player
           );
       }
@@ -113,7 +117,7 @@ system.runInterval(() => {
         db.pbz = db.osz;
         db.sendpbz &&
           print(
-            `§${db.tc1}§l${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`,
+            `§${db.tc1}${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`,
             player
           );
       }
@@ -121,7 +125,7 @@ system.runInterval(() => {
         db.pb = db.os;
         db.sendpb &&
           print(
-            `§${db.tc1}§l${db.prefix} §${db.tc2}New pb!: ${db.pb.toFixed(db.pTF)}`,
+            `§${db.tc1}${db.prefix} §${db.tc2}New pb!: ${db.pb.toFixed(db.pTF)}`,
             player
           );
       }
