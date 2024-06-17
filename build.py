@@ -56,11 +56,9 @@ def regExpSub(regEx, replace, file):
 if not args.package_only:
     # Check for input and output folder
     if not os.path.isdir("src"):
-        sys.exit("The src folder does not exist in the current working directory!")
+        os.makedirs("src")
     elif not os.path.isdir("BP/scripts"):
-        sys.exit(
-            "The output scripts folder does not exist in the current working directory!"
-        )
+        os.makedirs("BP/scripts")
 
     # Clean script output folder
     if args.clean:
