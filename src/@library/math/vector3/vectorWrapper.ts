@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { Vector2, Vector3 } from '@minecraft/server';
-import { Vector2Utils, Vector3Utils } from './coreHelpers';
+import type { Vector2, Vector3 } from "@minecraft/server";
+import { Vector2Utils, Vector3Utils } from "./coreHelpers";
 
 /**
  * Vector3 wrapper class which can be used as a Vector3 for APIs on \@minecraft/server which require a Vector,
@@ -22,7 +22,7 @@ export class Vector3Builder implements Vector3 {
     constructor(vec: Vector3, arg?: never, arg2?: never);
     constructor(x: number, y: number, z: number);
     constructor(first: number | Vector3, y?: number, z?: number) {
-        if (typeof first === 'object') {
+        if (typeof first === "object") {
             this.x = first.x;
             this.y = first.y;
             this.z = first.z;
@@ -180,7 +180,7 @@ export class Vector2Builder implements Vector2 {
     constructor(vec: Vector2, arg?: never);
     constructor(x: number, y: number);
     constructor(first: number | Vector2, y?: number) {
-        if (typeof first === 'object') {
+        if (typeof first === "object") {
             this.x = first.x;
             this.y = first.y;
         } else {

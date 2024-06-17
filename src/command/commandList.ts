@@ -1,6 +1,0 @@
-import 'command/cmds/help'
-import 'command/cmds/about'
-import 'command/cmds/setlb'
-import 'command/cmds/clearlb'
-import 'command/cmds/clearpb'
-import 'command/cmds/setting'

@@ -8,15 +8,16 @@
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "sourceMap": false,
-    "outDir": "./scripts",
+    "outDir": "./BP/scripts",
     "allowJs": true,
-    "rootDir": "src",
+
     "baseUrl": "./src",
     "paths": {
       "@lib/minecraft": ["@library/minecraft/Minecraft.js"],
-      "@lib/math": ["@library/math/Math.js"]
+      "@lib/math": ["@library/math/Math.js"],
+      "@zpk": ["ZPK/index.js"],
+      "@oj-realm": ["OJ Realm/index.js"]
     }
   },
-  "exclude": ["node_modules"],
   "include": ["./src", "src/@library/*"]
 }

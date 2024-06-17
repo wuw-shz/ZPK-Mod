@@ -1,3 +1,3 @@
 @echo off
 
-npm run watch
+bun run dev

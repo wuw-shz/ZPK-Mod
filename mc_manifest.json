@@ -1,0 +1,56 @@
+{
+  "format_version": 2,
+  "header": {
+    "bp_name": "ZPK Mod [BEH]",
+    "rp_name": "ZPK Mod [RES]",
+    "description": "§b@Zetaser_jtz §r| §b@wuw.sh\n§rA mod for one jump practice.\n§4Need open Beta APIs\n§aSend §f\".about\" in chat to get info\n§eYou can modify this add-on, but please indicate the original author",
+    "bp_uuid": "0841ec08-963a-4e06-bbc5-25b2e707594d",
+    "rp_uuid": "f15c66d5-ce50-436a-bece-59344c407783",
+    "version": [6, 0, 1],
+    "min_engine_version": [1, 21, 0]
+  },
+  "bp_modules": [
+    {
+      "description": "item and entity definitions",
+      "type": "data",
+      "uuid": "781a307a-3cda-419d-9e8a-bfc16277f71c",
+      "version": [1, 0, 0]
+    },
+    {
+      "description": "@minecraft/server | @minecraft/server-ui",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "fd82acf5-9efc-47c9-bc65-966eddfba8c7",
+      "version": [1, 0, 0],
+      "entry": "scripts/index.js"
+    }
+  ],
+  "bp_capabilities": ["script_eval"],
+  "rp_modules": [
+    {
+      "type": "resources",
+      "uuid": "b13993d6-991b-4d95-be1f-0a393ae07fa9",
+      "version": [1, 0, 0]
+    }
+  ],
+  "bp_dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.12.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0-beta"
+    }
+  ],
+  "bp_server_dependencies": [
+    {
+      "module_name": "@minecraft/server-admin",
+      "version": "1.0.0-beta"
+    }
+  ],
+  "metadata": {
+    "authors": ["wuw.sh"],
+    "license": "MIT"
+  }
+}

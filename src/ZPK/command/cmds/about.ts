@@ -1,15 +1,15 @@
-import {CommandInfo, print} from '@lib/minecraft';
-import {registerCommand, cmdPrefix, version} from 'index';
+import { CommandInfo, print } from "@lib/minecraft";
+import { registerCommand, cmdPrefix, version } from "@zpk";
 
 const regInfo: CommandInfo = {
-  name: 'about',
-  description: 'About the ZPK Mod',
-  aliases: ['ab'],
+    name: "about",
+    description: "About the ZPK Mod",
+    aliases: ["ab"],
 };
 
-registerCommand(regInfo, player => {
-  print(
-    `
+registerCommand(regInfo, (player) => {
+    print(
+        `
 §l§6● ZPK Mod (${version}) About
   §7-§dAuthor: §fZetaser_jtz (zsccjtz9136)
   §7-§dContributor: §f! wuw.shz (wuw.sh)
@@ -23,6 +23,6 @@ registerCommand(regInfo, player => {
   indicate the original author!
 
 `,
-    player
-  );
+        player
+    );
 });

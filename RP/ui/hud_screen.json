@@ -1,0 +1,295 @@
+{
+  "namespace": "hud",
+
+  "chat_panel": {
+    "visible": false
+  },
+
+  "player_position": {
+    "visible": false,
+    "alpha": 0
+  },
+
+  "hud_player_renderer": {
+    "controls": []
+  },
+
+  // "anim_actionbar_text_alpha_out": {
+  //   "anim_type": "alpha",
+  //   "easing": "in_expo",
+  //   "duration": 0.2,
+  //   "from": 1.0,
+  //   "to": 0,
+  //   "destroy_at_end": "hud_actionbar_text"
+  // },
+
+  // "hud_actionbar_text": {
+  //   "type": "image",
+  //   "anchor_from": "top_left",
+  //   "anchor_to": "top_left",
+  //   "size": ["100%c + 12px", "100%c + 5px"],
+  //   "offset": [2, 2],
+  //   "texture": "textures/ui/hud_tip_text_background",
+  //   "alpha": 0.05,
+  //   "controls": [
+  //     {
+  //       "actionbar_message": {
+  //         "type": "label",
+  //         "anchor_from": "top_left",
+  //         "anchor_to": "top_left",
+  //         "color": "$tool_tip_text",
+  //         "layer": 31,
+  //         "text": "$actionbar_text",
+  //         "shadow": true,
+  //         "localize": false,
+  //         "alpha": "@hud.anim_actionbar_text_alpha_out"
+  //       }
+  //     }
+  //   ]
+  // },
+
+  "main": {
+    "$update_key": "!&",
+    "type": "image",
+    "size": ["100%c + 12px", "100%c + 5px"],
+    "offset": [0, "50%-68px"],
+    "texture": "textures/ui/hud_tip_text_background",
+    "alpha": 0.05,
+    "controls": [
+      {
+        "text": {
+          "type": "label",
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "color": "$tool_tip_text",
+          "layer": 31,
+          "text": "#text",
+          "localize": false,
+          "shadow": true,
+          "alpha": 1,
+          "controls": [
+            {
+              "data_control_a": {
+                "type": "panel",
+                "bindings": [
+                  {
+                    "binding_name": "#hud_title_text_string"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not (#hud_title_text_string = #preserved_text) and (('%.2s' * #hud_title_text_string) = $update_key))",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_name": "#hud_title_text_string",
+                    "binding_name_override": "#preserved_text",
+                    "binding_condition": "visibility_changed"
+                  }
+                ]
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "data_control_a",
+              "source_property_name": "(#preserved_text - $update_key)",
+              "target_property_name": "#text"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "utils": {
+    "$update_key": "&!",
+    "type": "image",
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "size": ["100%c + 12px", "100%c + 5px"],
+    "offset": [2, 2],
+    "texture": "textures/ui/hud_tip_text_background",
+    "alpha": 0.05,
+    "controls": [
+      {
+        "text": {
+          "type": "label",
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "color": "$tool_tip_text",
+          "layer": 31,
+          "text": "#text",
+          "localize": false,
+          "shadow": true,
+          "alpha": 1,
+          "controls": [
+            {
+              "data_control_b": {
+                "type": "panel",
+                "bindings": [
+                  {
+                    "binding_name": "#hud_title_text_string"
+                  },
+                  {
+                    "binding_type": "view",
+                    "source_property_name": "(not (#hud_title_text_string = #preserved_text) and (('%.2s' * #hud_title_text_string) = $update_key))",
+                    "target_property_name": "#visible"
+                  },
+                  {
+                    "binding_name": "#hud_title_text_string",
+                    "binding_name_override": "#preserved_text",
+                    "binding_condition": "visibility_changed"
+                  }
+                ]
+              }
+            }
+          ],
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "data_control_b",
+              "source_property_name": "(#preserved_text - $update_key)",
+              "target_property_name": "#text"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "hud_title_text/title_frame/title": {
+    "modifications": [
+      {
+        "array_name": "bindings",
+        "operation": "insert_back",
+        "value": [
+          {
+            "binding_type": "view",
+            "source_property_name": "(not (#text = #text))",
+            "target_property_name": "#visible"
+          }
+        ]
+      }
+    ]
+  },
+
+  "root_panel/chat_stack": {
+    "type": "stack_panel",
+    "orientation": "vertical",
+    "size": ["40%", "100%"],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "controls": [
+      {
+        "paper_doll_padding": {
+          "type": "panel",
+          "size": ["100%", 50],
+          "bindings": [
+            {
+              "binding_name": "#paper_doll_visible",
+              "binding_name_override": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "paper_doll_padding_living_room": {
+          "type": "panel",
+          "size": ["100%", 30],
+          "bindings": [
+            {
+              "binding_name": "#paper_doll_visible_living_room",
+              "binding_name_override": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "vr_riding_chat_padding": {
+          "type": "panel",
+          "size": ["100%", 132],
+          "visible": "#vr_riding",
+          "bindings": [
+            {
+              "binding_name": "#vr_riding",
+              "binding_name_override": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "vr_chat_padding": {
+          "type": "panel",
+          "size": ["100%", 30],
+          "visible": "#vr_non_riding",
+          "bindings": [
+            {
+              "binding_name": "#vr_non_riding",
+              "binding_name_override": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "non_centered_gui_padding": {
+          "type": "panel",
+          "size": ["100%", 32],
+          "bindings": [
+            {
+              "binding_name": "#hud_visible_not_centered",
+              "binding_name_override": "#visible",
+              "binding_type": "global"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "root_panel": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "chat_panel@hud.chat_panel": {
+              "layer": 0,
+              "clips_children": true,
+              "anchor_from": "bottom_left",
+              "anchor_to": "bottom_left",
+              "visible": true,
+              "size": ["40%", "40%"],
+              "offset": [0, -28]
+            }
+          },
+          {
+            "player_position@hud.player_position": {
+              "layer": 0,
+              "alpha": 0.7,
+              "anchor_from": "bottom_left",
+              "anchor_to": "bottom_left",
+              "visible": true
+            }
+          },
+          {
+            "zpk_panel": {
+              "layer": 1,
+              "type": "panel",
+              "controls": 
+              [
+                {
+                  "main@hud.main": {}
+                },
+                {
+                  "utils@hud.utils": {}
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { Vector2, Vector3 } from '@minecraft/server';
-import { clampNumber } from '../general/clamp';
+import type { Vector2, Vector3 } from "@minecraft/server";
+import { clampNumber } from "../general/clamp";
 
 /**
  * Utilities operating on Vector3 objects. All methods are static and do not modify the input objects.
@@ -112,7 +112,7 @@ export class Vector3Utils {
     static toString(v: Vector3, options?: { decimals?: number; delimiter?: string }): string {
         const decimals = options?.decimals ?? 2;
         const str: string[] = [v.x.toFixed(decimals), v.y.toFixed(decimals), v.z.toFixed(decimals)];
-        return str.join(options?.delimiter ?? ', ');
+        return str.join(options?.delimiter ?? ", ");
     }
 
     /**
@@ -175,7 +175,7 @@ export class Vector2Utils {
     static toString(v: Vector2, options?: { decimals?: number; delimiter?: string }): string {
         const decimals = options?.decimals ?? 2;
         const str: string[] = [v.x.toFixed(decimals), v.y.toFixed(decimals)];
-        return str.join(options?.delimiter ?? ', ');
+        return str.join(options?.delimiter ?? ", ");
     }
 }
 

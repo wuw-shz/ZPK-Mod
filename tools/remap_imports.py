@@ -98,7 +98,7 @@ if args.watch:
 pass
 """
 regex = re.compile(r"builder.nameTag");
-for filename in glob.iglob('./src/**/*.ts', recursive = True):
+for filename in glob.iglob('./src/server/**/*.ts', recursive = True):
     modified = False
     with open(filename, 'r') as file:
         newlines = []
