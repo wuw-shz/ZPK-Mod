@@ -21,3 +21,4 @@ node_modules
 app/.import
 __pycache__
 bin
+bun.lockb

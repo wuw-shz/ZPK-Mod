@@ -6,6 +6,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+if not os.path.isdir("node_modules"):
+    print("Installing dependencies...")
+    subprocess.call(["bun", "install"])
+
 parser = argparse.ArgumentParser(description="Build and package the addon.")
 parser.add_argument(
     "--watch",
