@@ -47,8 +47,14 @@ export class Vector {
         return Vector.from(a).max(b);
     }
 
-    constructor(x: number, y: number, z: number) {
-        this.vals = [x, y, z];
+    constructor(vec: Vector3, arg?: never, arg2?: never);
+    constructor(x: number, y: number, z: number);
+    constructor(first: number | Vector3, y?: number, z?: number) {
+        if (typeof first === "object") {
+            this.vals = [first.x, first.y, first.z];
+        } else {
+            this.vals = [first, y ?? 0, z ?? 0];
+        }
     }
 
     get x() {
@@ -232,6 +238,10 @@ export class Vector {
 
     toArray() {
         return [this.x, this.y, this.z] as [number, number, number];
+    }
+
+    toFixed(precision: number) {
+        return new Vector(+this.x.toFixed(precision), +this.y.toFixed(precision), +this.z.toFixed(precision));
     }
 
     *[Symbol.iterator]() {

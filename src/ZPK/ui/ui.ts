@@ -23,7 +23,7 @@ export function settingUI(player: Player) {
 export function GUIUI(player: Player) {
     run(() => {
         const db = Database(player);
-        db.beforetfac;
+        db.befTFac;
         const gui = new ui.ModalFormData();
         gui.title("GUI Setting");
         gui.slider("Pos Precition", 2, 20, 1, db.pTF);
@@ -42,7 +42,8 @@ export function GUIUI(player: Player) {
         gui.toggle(`Hit\n${def(db.showhit)}`, db.showhit);
         gui.toggle(`Offset\n${def(db.showos)}`, db.showos);
         gui.toggle(`PB\n${def(db.showpb)}`, db.showpb);
-        gui.toggle(`Last Turning\n${def(db.showturn)}`, db.showturn);
+        gui.toggle(`Last Turning\n${def(db.showLastTurning)}`, db.showLastTurning);
+        gui.toggle(`Last Timing\n${def(db.showLastTiming)}`, db.showLastTiming);
         forceShow(player, gui).then((gui) => {
             if (gui.canceled) return settingUI(player);
             db.pTF = gui.formValues[0] as number;
@@ -60,7 +61,8 @@ export function GUIUI(player: Player) {
             db.showhit = gui.formValues[12] as boolean;
             db.showos = gui.formValues[13] as boolean;
             db.showpb = gui.formValues[14] as boolean;
-            db.showturn = gui.formValues[15] as boolean;
+            db.showLastTurning = gui.formValues[15] as boolean;
+            db.showLastTiming = gui.formValues[16] as boolean;
         });
     });
 }

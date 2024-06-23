@@ -83,6 +83,7 @@ class Timer {
         if (!this.isActive) {
             this.time = Date.now();
             this.isActive = true;
+            
         }
     }
 
