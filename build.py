@@ -174,3 +174,6 @@ if args.target != "debug":
         with ZipFile(f"builds/{mcname}.mcaddon", "w") as zip:
             zipWriteDir(zip, f"BP", f"{BP}")
             zipWriteDir(zip, f"RP", f"{RP}")
+        with ZipFile(f"{build_pack_name}.mcaddon", "w") as zip:
+            zipWriteDir(zip, f"BP", f"{BP}")
+            zipWriteDir(zip, f"RP", f"{RP}")

@@ -5,6 +5,7 @@ Desktop.ini
 !.bridge/compiler/
 !.bridge/extensions
 !.bridge/config.json
+builds
 build
 !BP/scripts
 BP/scripts/*
