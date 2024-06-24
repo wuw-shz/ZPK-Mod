@@ -4,6 +4,7 @@ import re
 import shutil
 import subprocess
 import sys
+import json
 from pathlib import Path
 
 if not os.path.isdir("node_modules"):
@@ -37,7 +38,7 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-build_pack_name = "ZPK Mod"
+build_pack_name = "ZPK-Mod"
 
 
 def handleError(err):
@@ -133,22 +134,28 @@ if not args.package_only:
         )
     )
 
-
+with open("mc_manifest.json") as file:
+    manifest = json.load(file)
+    ver = manifest["header"]["version"]
+version = f"{ver[0]}.{ver[1]}.{ver[2]}"
+mcname = f"{build_pack_name}-{version}"
+BP = f"{build_pack_name}-{version}-BP"
+RP = f"{build_pack_name}-{version}-RP"
 if not os.path.isdir("builds"):
     os.makedirs("builds")
 
-if os.path.exists(f"builds/{build_pack_name}BP"):
-    shutil.rmtree(f"builds/{build_pack_name}BP")
-if os.path.exists(f"builds/{build_pack_name}RP"):
-    shutil.rmtree(f"builds/{build_pack_name}RP")
-try:
-    shutil.copytree("BP", f"builds/{build_pack_name}BP")
-except:
-    pass
-try:
-    shutil.copytree("RP", f"builds/{build_pack_name}RP")
-except:
-    pass
+# if os.path.exists(f"builds/{BP}"):
+#     shutil.rmtree(f"builds/{BP}")
+# if os.path.exists(f"builds/{RP}"):
+#     shutil.rmtree(f"builds/{RP}")
+# try:
+#     shutil.copytree("BP", f"builds/{BP}")
+# except:
+#     pass
+# try:
+#     shutil.copytree("RP", f"builds/{RP}")
+# except:
+#     pass
 
 if args.target != "debug":
     from zipfile import ZipFile
@@ -160,6 +167,10 @@ if args.target != "debug":
                 zip.write(filePath, arcname / Path(filePath).relative_to(dirname))
 
     if args.target == "release":
-        with ZipFile(f"builds/{build_pack_name}.mcaddon", "w") as zip:
-            zipWriteDir(zip, f"builds/{build_pack_name}BP", f"{build_pack_name}BP")
-            zipWriteDir(zip, f"builds/{build_pack_name}RP", f"{build_pack_name}RP")
+        with ZipFile(f"builds/{BP}.zip", "w") as zip:
+            zipWriteDir(zip, f"BP", f"{BP}")
+        with ZipFile(f"builds/{RP}.zip", "w") as zip:
+            zipWriteDir(zip, f"RP", f"{RP}")
+        with ZipFile(f"builds/{mcname}.mcaddon", "w") as zip:
+            zipWriteDir(zip, f"BP", f"{BP}")
+            zipWriteDir(zip, f"RP", f"{RP}")

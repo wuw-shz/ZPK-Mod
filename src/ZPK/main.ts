@@ -1,4 +1,4 @@
-import { world, system, Player } from "@minecraft/server";
+import { world, system, Player, Vector3 } from "@minecraft/server";
 import { Database, settingUI, zpkModOn } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
@@ -155,9 +155,8 @@ system.runInterval(() => {
                 labels: [
                     `§${db.tc1}X §${db.tc2}${pos.x.toFixed(db.pTF)} §${db.tc1}Y §${db.tc2}${pos.y.toFixed(db.pTF)} §${db.tc1}Z §${db.tc2}${pos.z.toFixed(db.pTF)}`,
                     `${db.showpit ? `§${db.tc1}P §${db.tc2}${rot.x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${rot.y.toFixed(db.rTF)}` : ""}`,
-                    `§eYou're in §7[§l§epractice mode§r§7]`,
                 ],
-                conditions: [db.showpos, db.showpit || db.showfac, JSON.parse(player.getDynamicProperty("practiceData") as string).toggle as boolean],
+                conditions: [db.showpos, db.showpit || db.showfac],
             },
 
             utils: {
@@ -243,3 +242,4 @@ function getMovement(player: Player) {
     if (vec.z < 0) dir.add("Backward");
     return dir;
 }
+
