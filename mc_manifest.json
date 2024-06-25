@@ -6,7 +6,7 @@
     "description": "§b@Zetaser_jtz §r| §b@wuw.sh\n§rA mod for one jump practice.\n§4Need open Beta APIs\n§aSend §f\".about\" in chat to get info\n§eYou can modify this add-on, but please indicate the original author",
     "bp_uuid": "0841ec08-963a-4e06-bbc5-25b2e707594d",
     "rp_uuid": "f15c66d5-ce50-436a-bece-59344c407783",
-    "version": [6, 0, 3],
+    "version": [6, 0, 4],
     "min_engine_version": [1, 21, 0]
   },
   "bp_modules": [
