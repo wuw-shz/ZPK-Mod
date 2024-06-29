@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.fillBlocks(Blo)
+        player.dimension.fillBlocks(Block)
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
@@ -402,4 +402,4 @@ function getMovement(player: Player) {
     if (vec.z < 0) dir.add("Backward");
 
     return dir;
-}
+}
