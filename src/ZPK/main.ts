@@ -36,10 +36,6 @@ system.runInterval(() => {
             updateGuiDisplay(player, db);
             continue;
         }
-
-        updatePlayerState(player, db, fullVel);
-        handleLandingState(player, db);
-        handleMovementState(player, db, fullVel);
     }
 });
 
