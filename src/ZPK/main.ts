@@ -2,7 +2,6 @@ import { world, system, Player } from "@minecraft/server";
 import { Database, settingUI, zpkModOn } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
-
 const worldTime = startTime();
 
 world.beforeEvents.itemUse.subscribe((data) => {
