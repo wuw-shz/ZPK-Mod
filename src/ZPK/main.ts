@@ -47,7 +47,7 @@ system.runInterval(() => {
 function alternateTitleDisplay(player: Player, db: InitialDataType) {
     switch (db.idx) {
         case 1:
-            player.onScreenDisplay.setTitle("&!");
+            player.onScreenDisplay.setTitle("&! ");
             db.idx = 2;
             break;
         case 2:
