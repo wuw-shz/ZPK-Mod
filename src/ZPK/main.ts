@@ -48,7 +48,7 @@ function updatePlayerState(db: InitialDataType, player: Player, pos: Vector3, ve
     }
 
     handleMovementStates(db, player);
-    handleOffsetState(db, player, pos);
+    handleOffsetState(db, player, pos
 }
 
 function initializeOnGroundState(db: InitialDataType, pos: Vector3, vel: Vector3, rot: Vector2) {
