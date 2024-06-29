@@ -1,4 +1,4 @@
-import { world, system, Player, Vector3 } from "@minecraft/server";
+import { world, system, Player, Vector3, BlockPermutation } from "@minecraft/server";
 import { Vector, print, startTime, Thread } from "@lib/minecraft";
 import { Database, InitialDataType, settingUI, zpkModOn } from "@zpk";
 import { Block } from "@library/minecraft/classes/blockBuilder";
@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.setBlockPermutation(location, BlockP
+        player.dimension.setBlockPermutation(location, BlockPermutation
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
