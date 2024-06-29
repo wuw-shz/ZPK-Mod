@@ -26,7 +26,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.se
+        player.sen
         const db = Database(player);
         const pos = player.location;
         const vel = player.getVelocity();
