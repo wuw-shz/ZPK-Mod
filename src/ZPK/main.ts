@@ -42,7 +42,7 @@ system.runInterval(() => {
     }
 });
 
-function alternateTitleDisplay(player: Player, db: any) {
+function alternateTitleDisplay(player: Player, db: InitialDataType) {
     switch (db.idx) {
         case 1:
             player.onScreenDisplay.setTitle("&!");
@@ -55,7 +55,7 @@ function alternateTitleDisplay(player: Player, db: any) {
     }
 }
 
-function updatePlayerState(player: Player, db: any) {
+function updatePlayerState(player: Player, db: InitialDataType) {
     const pos = player.location;
     const rot = player.getRotation();
     const vel = player.getVelocity();
@@ -76,7 +76,7 @@ function updatePlayerState(player: Player, db: any) {
     updateMovementState(player, db, fullVel);
 }
 
-function updateLandingState(player: Player, db: any, pos: Vector3, vel: Vector3, rot: { y: number }) {
+function updateLandingState(player: Player, db: InitialDataType, pos: Vector3, vel: Vector3, rot: { y: number }) {
     db.landx = pos.x - vel.x;
     db.landy = pos.y - vel.y;
     db.landz = pos.z - vel.z;
@@ -89,7 +89,7 @@ function updateLandingState(player: Player, db: any, pos: Vector3, vel: Vector3,
     db.befJump = false;
 }
 
-function updateAirborneState(db: any) {
+function updateAirborneState(db: InitialDataType) {
     db.tier = 10;
     if (!db.befJump) {
         db.jumpTick = worldTime.getTime();
@@ -100,7 +100,7 @@ function updateAirborneState(db: any) {
     db.befLand = false;
 }
 
-function updateMovementState(player: Player, db: any, fullVel: number) {
+function updateMovementState(player: Player, db: InitialDataType, fullVel: number) {
     const currentMovement = getMovement(player);
 
     if (currentMovement.has("Forward") || currentMovement.has("Backward") || currentMovement.has("Left") || currentMovement.has("Right")) {
@@ -122,7 +122,7 @@ function updateMovementState(player: Player, db: any, fullVel: number) {
     updateTiming(player, db, fullVel);
 }
 
-function updateTiming(player: Player, db: any, fullVel: number) {
+function updateTiming(player: Player, db: InitialDataType, fullVel: number) {
     const TimeDiff = (ms: number) => worldTime.getTime() - ms;
     const msToTicks = (ms: number) => (ms / 1000) * 20;
     const isBackward = getMovement(player).has("Backward");
@@ -164,7 +164,7 @@ function updateTiming(player: Player, db: any, fullVel: number) {
     updateOffset(player, db);
 }
 
-function resetTimingState(db: any) {
+function resetTimingState(db: InitialDataType) {
     db.HH = false;
     db.jam = false;
     db.sprint = false;
@@ -174,7 +174,7 @@ function resetTimingState(db: any) {
     db.lastTimingTick = 0;
 }
 
-function updateOffset(player: Player, db: any) {
+function updateOffset(player: Player, db: InitialDataType) {
     const pos = player.location;
     const vel = player.getVelocity();
     const isOnGround = player.isOnGround;
@@ -195,7 +195,7 @@ function updateOffset(player: Player, db: any) {
     }
 }
 
-function printOffsets(player: Player, db: any) {
+function printOffsets(player: Player, db: InitialDataType) {
     if (db.sendos) {
         print(`§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`, player);
     }
@@ -230,7 +230,7 @@ function updatePersonalBests(db: InitialDataType, player: Player) {
     }
 }
 
-function updateGuiDisplay(player: Player, db: any) {
+function updateGuiDisplay(player: Player, db: InitialDataType) {
     const pos = player.location;
     const rot = player.getRotation();
     const vel = player.getVelocity();
