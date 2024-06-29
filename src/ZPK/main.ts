@@ -135,7 +135,7 @@ function resetMovementStates(db: InitialDataType) {
     db.lastTimingTick = 0;
 }
 
-function handleOffsetState(db: PlayerData, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean) {
+function handleOffsetState(db: I, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean) {
     if (pos.y <= db.lb.y && vel.y <= 0 && pos.y - vel.y > db.lb.y && -Math.abs(pos.x - db.lb.x - 0.5) + 0.8 >= -1 && -Math.abs(pos.z - db.lb.z - 0.5) + 0.8 >= -1 && !db.befLandLB && db.lbon) {
         db.befLandLB = true;
         db.osx = -Math.abs(pos.x - vel.x - db.lb.x - 0.5) + 0.8;
