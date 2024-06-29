@@ -76,8 +76,63 @@ function handleInAirState(db: InitialDataType) {
     db.befLand = false;
 }
 
-function handleMovementStates(db: InitialDataType, player: Player) {
-    // Handle movement states here
+function handleMovementStates(db: PlayerData, player: Player) {
+    const movement = getMovement(player);
+    const worldTimeNow = worldTime.getTime();
+    const isBackward = movement.has("Backward");
+
+    if ((movement.has("Forward") || movement.has("Backward") || movement.has("Left") || movement.has("Right")) && !db.befWalk) {
+        db.befWalk = true;
+        db.walkTick = worldTimeNow;
+    }
+    if (movement.has("Still") && db.befWalk) {
+        db.befWalk = false;
+    }
+    if (player.isSprinting && !db.befSprinting) {
+        db.befSprinting = true;
+        db.sprintTick = worldTimeNow;
+    }
+    if (!player.isSprinting && db.befSprinting) {
+        db.befSprinting = false;
+    }
+
+    const TimeDiff = (ms: number) => worldTimeNow - ms;
+    const msToTicks = (ms: number) => (ms / 1000) * 20;
+
+    if (!db.HH && db.befJump && db.befWalk && db.jumpTick <= db.walkTick) {
+        db.lastTimingTick = TimeDiff(db.jumpTick);
+        if (db.jumpTick === db.walkTick && !db.jam) {
+            db.jam = true;
+            db.lastTiming = (isBackward ? "BW" : "") + "Jam";
+        }
+        if (db.lastTimingTick > 0 && !db.pessi && !db.jam) {
+            db.pessi = true;
+            if (db.lastTimingTick <= 100) db.lastTiming = `Max Pessi [${db.lastTimingTick}ms]`;
+            else db.lastTiming = `Pessi ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+        }
+        if (db.befSprinting && !db.sprint && !db.pessi && db.jam && db.jumpTick < db.sprintTick) {
+            db.sprint = true;
+            db.lastTiming = `FMM ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+        }
+    } else if (!db.HH && !db.jam && !db.pessi && !db.sprint && db.befJump && db.befWalk && db.walkTick < db.jumpTick && !player.isFalling) {
+        db.HH = true;
+        db.lastTimingTick = TimeDiff(db.walkTick);
+        if (TimeDiff(db.walkTick) > 0) db.lastTiming = (isBackward ? "BW" : "") + `HH ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+    }
+
+    if (movement.has("Still") && player.isOnGround && !db.befJump) {
+        resetMovementStates(db);
+    }
+}
+
+function resetMovementStates(db: PlayerData) {
+    db.HH = false;
+    db.jam = false;
+    db.sprint = false;
+    db.pessi = false;
+    db.walkTick = 0;
+    db.jumpTick = 0;
+    db.lastTimingTick = 0;
 }
 
 function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3) {
