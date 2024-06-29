@@ -32,6 +32,7 @@ system.runInterval(() => {
 
         if (!db.toggleZPKMod) {
             alternateTitleDisplay(player, db);
+        updateGuiDisplay(player, db);
             continue;
         }
         const vel = player.getVelocity();
