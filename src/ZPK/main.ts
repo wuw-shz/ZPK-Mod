@@ -402,4 +402,4 @@ function getMovement(player: Player) {
     if (vec.z < 0) dir.add("Backward");
 
     return dir;
-}
+}
