@@ -76,6 +76,7 @@ function updatePlayerState(player: Player, db: InitialDataType) {
     updateMovementState(player, db, fullVel);
 }
 
+
 function updateLandingState(player: Player, db: InitialDataType, pos: Vector3, vel: Vector3, rot: { y: number }) {
     db.landx = pos.x - vel.x;
     db.landy = pos.y - vel.y;
