@@ -4,4 +4,4 @@ export * from "./ui/index";
 export * from "./command/index";
 
 import "./command/index";
-import "./main";
+import "./main1";
