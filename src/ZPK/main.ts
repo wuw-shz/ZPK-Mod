@@ -31,6 +31,8 @@ system.runInterval(() => {
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
+        const vel = player.getVelocity();
+        const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
             updateGuiDisplay(player, db);
             continue;
         }
