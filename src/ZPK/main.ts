@@ -388,7 +388,7 @@ function updateGuiDisplay(player: Player, db: InitialDataType) {
 function getMovement(player: Player) {
     const vel = player.getVelocity();
     const rot = player.getRotation();
-    const vec = new Vector(vel).rotateY(-rot.y).);
+    const vec = new Vector(vel).rotateY(-rot.y).;
     const dir = new Set<"Still" | "Left" | "Right" | "Up" | "Down" | "Forward" | "Backward">();
 
     if (vec.lengthSqr === 0) return dir.add("Still");
