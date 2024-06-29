@@ -26,7 +26,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        p
+        pl
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
