@@ -60,7 +60,6 @@ function updatePlayerState(player: Player, db: InitialDataType, fullVel: number)
     const rot = player.getRotation();
     const vel = player.getVelocity();
     const isOnGround = player.isOnGround;
-    const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
     if (rot.y != db.befTFac) {
         db.lastTurning = rot.y - db.befTFac;
