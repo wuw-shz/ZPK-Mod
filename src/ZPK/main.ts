@@ -137,9 +137,8 @@ function updateTiming(player: Player, db: any, fullVel: number) {
 
         if (db.lastTimingTick > 0 && !db.pessi && !db.jam) {
             db.pessi = true;
-            db.lastTiming = db.lastTimingTick > 0 && db.lastTimingTick <= 100 
-                ? `Max Pessi [${db.lastTimingTick}ms]` 
-                : `Pessi ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+            db.lastTiming =
+                db.lastTimingTick > 0 && db.lastTimingTick <= 100 ? `Max Pessi [${db.lastTimingTick}ms]` : `Pessi ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
         }
 
         if (db.befSprinting && !db.sprint && !db.pessi && db.jam && db.jumpTick < db.sprintTick) {
@@ -240,17 +239,17 @@ function updateGuiDisplay(player: Player, db: any) {
     const NA = (value: string | number) => (typeof value === "number" ? (isFinite(value) ? value.toFixed(db.pTF) : "N/A") : value);
 
     type GUI = {
-        main: { labels: string[], conditions: boolean[] },
-        utils: { labels: string[], conditions: boolean[] }
+        main: { labels: string[]; conditions: boolean[] };
+        utils: { labels: string[]; conditions: boolean[] };
     };
 
     const gui: GUI = {
         main: {
             labels: [
                 `§${db.tc1}X §${db.tc2}${pos.x.toFixed(db.pTF)} §${db.tc1}Y §${db.tc2}${pos.y.toFixed(db.pTF)} §${db.tc1}Z §${db.tc2}${pos.z.toFixed(db.pTF)}`,
-                `${db.showpit ? `§${db.tc1}P §${db.tc2}${rot.x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${rot.y.toFixed(db.rTF)}` : ""}`
+                `${db.showpit ? `§${db.tc1}P §${db.tc2}${rot.x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${rot.y.toFixed(db.rTF)}` : ""}`,
             ],
-            conditions: [db.showpos, db.showpit || db.showfac]
+            conditions: [db.showpos, db.showpit || db.showfac],
         },
         utils: {
             labels: [
@@ -265,7 +264,7 @@ function updateGuiDisplay(player: Player, db: any) {
                 `§${db.tc1}Offset §${db.tc2}${NA(db.os)} §${db.tc1}(X, Z) §8[§${db.tc2}${NA(db.osx)}§${db.tc1}§8, §${db.tc2}${NA(db.osz)}§8]`,
                 `§${db.tc1}PB §${db.tc2}${NA(db.pb)} §${db.tc1}(X, Z) §8[§${db.tc2}${NA(db.pbx)}§8, §${db.tc2}${NA(db.pbz)}§8]`,
                 `§${db.tc1}Last Turning §${db.tc2}${db.lastTurning.toFixed(db.rTF)}`,
-                `§${db.tc1}Last Timing §${db.tc2}${db.lastTiming}`
+                `§${db.tc1}Last Timing §${db.tc2}${db.lastTiming}`,
             ],
             conditions: [
                 db.showja,
@@ -279,9 +278,9 @@ function updateGuiDisplay(player: Player, db: any) {
                 db.showos,
                 db.showpb,
                 db.showLastTurning,
-                db.showLastTiming
-            ]
-        }
+                db.showLastTiming,
+            ],
+        },
     };
 
     if (db.separateGui) {
@@ -299,11 +298,23 @@ function updateGuiDisplay(player: Player, db: any) {
         switch (db.idx) {
             case 1:
                 db.idx = 2;
-                player.onScreenDisplay.setTitle("!&§r§f" + gui.main.labels.slice(2).filter((l, i) => gui.main.conditions.slice(2)[i]).join("\n"));
+                player.onScreenDisplay.setTitle(
+                    "!&§r§f" +
+                        gui.main.labels
+                            .slice(2)
+                            .filter((l, i) => gui.main.conditions.slice(2)[i])
+                            .join("\n")
+                );
                 break;
             case 2:
                 db.idx = 1;
-                player.onScreenDisplay.setTitle("&!§r§f" + gui.main.labels.concat(gui.utils.labels).filter((l, i) => gui.main.conditions.concat(gui.utils.conditions)[i]).join("\n"));
+                player.onScreenDisplay.setTitle(
+                    "&!§r§f" +
+                        gui.main.labels
+                            .concat(gui.utils.labels)
+                            .filter((l, i) => gui.main.conditions.concat(gui.utils.conditions)[i])
+                            .join("\n")
+                );
                 break;
         }
     }
