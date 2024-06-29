@@ -26,7 +26,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.setBlockPermutation(location, new BLock)
+        player.dimension.setBlockPermutation(location, new )
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
