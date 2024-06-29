@@ -1,6 +1,6 @@
 import { world, system, Player, Vector3 } from "@minecraft/server";
 import { Database, settingUI, zpkModOn } from "@zpk";
-import { Timer, Vector, print, startTime, } from "@lib/minecraft";
+import { Timer, Vector, print, startTime,  } from "@lib/minecraft";
 
 /* Toggle ZPK Mod */
 
