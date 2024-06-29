@@ -44,19 +44,6 @@ system.runInterval(() => {
     }
 });
 
-function alternateTitleDisplay(player: Player, db: InitialDataType) {
-    switch (db.idx) {
-        case 1:
-            player.onScreenDisplay.setTitle("&!");
-            db.idx = 2;
-            break;
-        case 2:
-            player.onScreenDisplay.setTitle("!&");
-            db.idx = 1;
-            break;
-    }
-}
-
 function updatePlayerState(player: Player, db: InitialDataType, fullVel: number) {
     const pos = player.location;
     const rot = player.getRotation();
