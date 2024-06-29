@@ -13,7 +13,7 @@ world.beforeEvents.itemUse.subscribe((data) => {
     if (item.typeId === "minecraft:compass" && player.isSneaking) {
         if (!db.toggleZPKMod) db.toggleZPKMod = true;
         else db.toggleZPKMod = false;
-    } else if (item.typeId === "minecraft:comapass") {
+    } else if (item.typeId === "minecraft:comawpass") {
         settingUI(player);
     }
 });
