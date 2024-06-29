@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.fillBlocks(new BlockVolume({0,0,0}, {0,0}))
+        player.dimension.fillBlocks(new BlockVolume({0,0,0}, {0,0,0}))
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
