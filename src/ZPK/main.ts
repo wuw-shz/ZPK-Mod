@@ -84,7 +84,7 @@ function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3) {
     // Handle offset state here
 }
 
-function renderPlayerGUI(db: PlayerData, player: Player) {
+function renderPlayerGUI(db: InitialDataType, player: Player) {
     const guiTitle = db.separateGui ? (db.idx === 1 ? "!&" : "&!") : "!&";
     const guiLabels = getGUILabels(db);
 
