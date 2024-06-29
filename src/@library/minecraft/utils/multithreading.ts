@@ -35,6 +35,7 @@ class Thread<T extends any[] = any[]> {
         this.active = true;
         this.valid = false;
 
+        if (!configuration.multiThreadingEnabled) this.join();
     }
 
     async join() {
