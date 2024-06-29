@@ -5,7 +5,7 @@ export type Key = keyof InitialDataType;
 export type Value = InitialDataType[Key];
 
 export const InitialData = {
-    toggleZPKMod: f,
+    toggleZPKMod: fa,
     landtolbx: 0,
     landtolbz: 0,
     landx: 0,
