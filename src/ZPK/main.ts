@@ -51,7 +51,7 @@ function alternateTitleDisplay(player: Player, db: InitialDataType) {
             db.idx = 2;
             break;
         case 2:
-            player.onScreenDisplay.setTitle("!&");
+            player.onScreenDisplay.setTitle("!& ");
             db.idx = 1;
             break;
     }
