@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.fillBlocks(new BlockVolume(player.location, {x: 0, y: 0, z:0}), 'minecraft:stone')
+        player.dimension.fillBlocks(new BlockVolume(player.location, layer.location), "minecraft:stone");
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
