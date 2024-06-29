@@ -135,8 +135,54 @@ function resetMovementStates(db: InitialDataType) {
     db.lastTimingTick = 0;
 }
 
-function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3) {
-    // Handle offset state here
+function handleOffsetState(db: PlayerData, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean) {
+    if (pos.y <= db.lb.y && vel.y <= 0 && pos.y - vel.y > db.lb.y && -Math.abs(pos.x - db.lb.x - 0.5) + 0.8 >= -1 && -Math.abs(pos.z - db.lb.z - 0.5) + 0.8 >= -1 && !db.befLandLB && db.lbon) {
+        db.befLandLB = true;
+        db.osx = -Math.abs(pos.x - vel.x - db.lb.x - 0.5) + 0.8;
+        db.osz = -Math.abs(pos.z - vel.z - db.lb.z - 0.5) + 0.8;
+        db.os = Math.sqrt(db.osx ** 2 + db.osz ** 2) * ([db.osx, db.osz].some((os) => os < 0) ? -1 : 1);
+
+        if (db.sendos) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`, player);
+        if (db.sendosx) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset X: ${db.osx.toFixed(db.pTF)}`, player);
+        if (db.sendosz) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset Z: ${db.osz.toFixed(db.pTF)}`, player);
+    }
+
+    if (db.lbon && isonground) db.befLandLB = false;
+
+    if (!db.lbon && !player.isOnGround) {
+        db.lbon = true;
+        db.lb = pos;
+    }
+
+    if (player.isOnGround && db.lbon) db.lbon = false;
+
+    if (isonground && !db.befLand) {
+        db.befLand = true;
+        db.pbx = db.hitx - pos.x;
+        db.pbz = db.hitz - pos.z;
+        db.pb = Math.sqrt(db.pbx ** 2 + db.pbz ** 2);
+
+        if (db.sendpb) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock: ${db.pb.toFixed(db.pTF)}`, player);
+        if (db.sendpbx) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock X: ${db.pbx.toFixed(db.pTF)}`, player);
+        if (db.sendpbz) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock Z: ${db.pbz.toFixed(db.pTF)}`, player);
+    }
+}
+
+function getMovement(player: Player): Set<string> {
+    const movement = new Set<string>();
+    const vel = player.getVelocity();
+    const rot = player.getRotation();
+
+    const forwardVelocity = vel.z * Math.cos(rot.y * (Math.PI / 180)) + vel.x * Math.sin(rot.y * (Math.PI / 180));
+    const sidewaysVelocity = vel.x * Math.cos(rot.y * (Math.PI / 180)) - vel.z * Math.sin(rot.y * (Math.PI / 180));
+
+    if (forwardVelocity > 0) movement.add("Forward");
+    if (forwardVelocity < 0) movement.add("Backward");
+    if (sidewaysVelocity > 0) movement.add("Left");
+    if (sidewaysVelocity < 0) movement.add("Right");
+    if (forwardVelocity === 0 && sidewaysVelocity === 0) movement.add("Still");
+
+    return movement;
 }
 
 function renderPlayerGUI(db: InitialDataType, player: Player) {
