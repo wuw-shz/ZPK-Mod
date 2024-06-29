@@ -31,15 +31,16 @@ system.runInterval(() => {
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
+            alternateTitleDisplay(player, db);
+            continue;
+        }
         const vel = player.getVelocity();
         const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
-            updateGuiDisplay(player, db);
 
         updatePlayerState(player, db, fullVel);
         handleLandingState(player, db);
         handleMovementState(player, db, fullVel);
-            continue;
-        }
+        updateGuiDisplay(player, db);
     }
 });
 
