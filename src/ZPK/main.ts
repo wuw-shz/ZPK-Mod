@@ -34,8 +34,8 @@ system.runInterval(() => {
             alternateTitleDisplay(player, db);
             continue;
         }
-    const vel = player.getVelocity();
-    const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
+        const vel = player.getVelocity();
+        const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
         updatePlayerState(player, db);
         handleLandingState(player, db);
@@ -76,7 +76,6 @@ function updatePlayerState(player: Player, db: InitialDataType, fullVel: number)
 
     updateMovementState(player, db, fullVel);
 }
-
 
 function updateLandingState(player: Player, db: InitialDataType, pos: Vector3, vel: Vector3, rot: { y: number }) {
     db.landx = pos.x - vel.x;
@@ -288,7 +287,6 @@ function handleLandingState(player: Player, db: any) {
         db.befLandLB = false;
     }
 }
-
 
 function updateGuiDisplay(player: Player, db: InitialDataType) {
     const pos = player.location;
