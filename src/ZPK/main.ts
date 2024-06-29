@@ -218,7 +218,7 @@ function updatePersonalBests(db: any) {
     if (db.osz > db.pbz || !isFinite(db.pbz)) {
         db.pbz = db.osz;
         if (db.sendpbz) {
-            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`);
+            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`, player);
         }
     }
 
