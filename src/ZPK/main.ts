@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        dimension.setBlockPermutation(pllocation, BlockPermutation.resolve('minecraft:stone')
+        dimension.setBlockPermutation(plalocation, BlockPermutation.resolve('minecraft:stone')
         player.dimension.fillBlocks(new BlockVolume(player.location, layer.location), "minecraft:stone");
         const db = Database(player);
 
