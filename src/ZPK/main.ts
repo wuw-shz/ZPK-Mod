@@ -207,7 +207,7 @@ function printOffsets(player: Player, db: any) {
     }
 }
 
-function updatePersonalBests(db: I, player: Player) {
+function updatePersonalBests(db: Ini, player: Player) {
     if (db.osx > db.pbx || !isFinite(db.pbx)) {
         db.pbx = db.osx;
         if (db.sendpbx) {
