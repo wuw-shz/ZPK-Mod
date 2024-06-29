@@ -38,7 +38,7 @@ system.runInterval(() => {
     }
 });
 
-function updatePlayerState(db: PlayerData, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean, fullvel: number) {
+function updatePlayerState(db: InitialDataType, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean, fullvel: number) {
     if (isonground && !db.befLand) {
         initializeOnGroundState(db, pos, vel, rot);
     }
