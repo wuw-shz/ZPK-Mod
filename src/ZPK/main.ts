@@ -1,8 +1,10 @@
-import { world, system, Player, Vector3, Vector2 } from "@minecraft/server";
-import { Database, settingUI, zpkModOn, InitialDataType } from "@zpk";
+import { world, system, Player, Vector3 } from "@minecraft/server";
+import { Database, settingUI, zpkModOn } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
-const worldTime = startTime();
+/* Toggle ZPK Mod */
+
+const COMPASS_ID = "minecraft:compass";
 
 world.beforeEvents.itemUse.subscribe((data) => {
     if (!zpkModOn) return;
@@ -13,103 +15,133 @@ world.beforeEvents.itemUse.subscribe((data) => {
 
     if (!(player instanceof Player)) return;
 
-    if (item.typeId === "minecraft:compass") {
-        if (player.isSneaking) {
-            db.toggleZPKMod = !db.toggleZPKMod;
-        } else {
-            settingUI(player);
-        }
+    if (item.typeId === COMPASS_ID && player.isSneaking) {
+        db.toggleZPKMod = !db.toggleZPKMod;
+    } else if (item.typeId === COMPASS_ID) {
+        settingUI(player);
     }
 });
+
+const worldTime = startTime();
 
 system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
         const db = Database(player);
-        const pos = player.location;
-        const vel = player.getVelocity();
-        const rot = player.getRotation();
-        const isonground = player.isOnGround;
-        const fullvel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
-        updatePlayerState(db, player, pos, vel, rot, isonground, fullvel);
-        renderPlayerGUI(db, player);
+        if (!db.toggleZPKMod) {
+            alternateTitleDisplay(player, db);
+            continue;
+        }
+
+        updatePlayerState(player, db);
+        handleLandState(player, db);
+        handleMovementState(player, db);
+        updateGuiDisplay(player, db);
     }
 });
 
-function updatePlayerState(db: InitialDataType, player: Player, pos: Vector3, vel: Vector3, rot: Vector2, isonground: boolean, fullvel: number) {
-    if (isonground && !db.befLand) {
-        initializeOnGroundState(db, pos, vel, rot);
+function alternateTitleDisplay(player: Player, db: any) {
+    switch (db.idx) {
+        case 1:
+            player.onScreenDisplay.setTitle("&!");
+            db.idx = 2;
+            break;
+        case 2:
+            player.onScreenDisplay.setTitle("!&");
+            db.idx = 1;
+            break;
     }
-
-    if (!isonground) {
-        handleInAirState(db);
-    }
-
-    handleMovementStates(db, player);
-    handleOffsetState(db, player, pos, vel, rot, isonground);
 }
 
-function initializeOnGroundState(db: InitialDataType, pos: Vector3, vel: Vector3, rot: Vector2) {
-    db.befLand = true;
+function updatePlayerState(player: Player, db: any) {
+    const pos = player.location;
+    const rot = player.getRotation();
+    const vel = player.getVelocity();
+    const isOnGround = player.isOnGround;
+    const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
+
+    if (rot.y != db.befTFac) {
+        db.lastTurning = rot.y - db.befTFac;
+        db.befTFac = rot.y;
+    }
+
+    if (isOnGround && !db.befLand) {
+        updateLandingState(player, db, pos, vel, rot);
+    } else if (!isOnGround) {
+        updateAirborneState(db);
+    }
+
+    updateMovementState(player, db, fullVel);
+}
+
+function updateLandingState(player: Player, db: any, pos: Vector3, vel: Vector3, rot: { y: number }) {
     db.landx = pos.x - vel.x;
     db.landy = pos.y - vel.y;
     db.landz = pos.z - vel.z;
     db.hitx = pos.x;
     db.hity = pos.y;
     db.hitz = pos.z;
-    db.befJump = false;
+    db.hita = rot.y;
     db.tier = 0;
+    db.befLand = true;
+    db.befJump = false;
 }
 
-function handleInAirState(db: InitialDataType) {
-    if (db.befLand) {
-        db.tier = 10;
-        if (!db.befJump) {
-            db.jumpTick = worldTime.getTime();
-            db.befJump = true;
-        }
+function updateAirborneState(db: any) {
+    db.tier = 10;
+    if (!db.befJump) {
+        db.jumpTick = worldTime.getTime();
+        db.befJump = true;
     } else {
         db.tier -= 1;
     }
     db.befLand = false;
 }
 
-function handleMovementStates(db: InitialDataType, player: Player) {
-    const movement = getMovement(player);
-    const worldTimeNow = worldTime.getTime();
-    const isBackward = movement.has("Backward");
+function updateMovementState(player: Player, db: any, fullVel: number) {
+    const currentMovement = getMovement(player);
 
-    if ((movement.has("Forward") || movement.has("Backward") || movement.has("Left") || movement.has("Right")) && !db.befWalk) {
-        db.befWalk = true;
-        db.walkTick = worldTimeNow;
-    }
-    if (movement.has("Still") && db.befWalk) {
+    if (currentMovement.has("Forward") || currentMovement.has("Backward") || currentMovement.has("Left") || currentMovement.has("Right")) {
+        if (!db.befWalk) {
+            db.befWalk = true;
+            db.walkTick = worldTime.getTime();
+        }
+    } else if (currentMovement.has("Still")) {
         db.befWalk = false;
     }
+
     if (player.isSprinting && !db.befSprinting) {
         db.befSprinting = true;
-        db.sprintTick = worldTimeNow;
-    }
-    if (!player.isSprinting && db.befSprinting) {
+        db.sprintTick = worldTime.getTime();
+    } else if (!player.isSprinting) {
         db.befSprinting = false;
     }
 
-    const TimeDiff = (ms: number) => worldTimeNow - ms;
+    updateTiming(player, db, fullVel);
+}
+
+function updateTiming(player: Player, db: any, fullVel: number) {
+    const TimeDiff = (ms: number) => worldTime.getTime() - ms;
     const msToTicks = (ms: number) => (ms / 1000) * 20;
+    const isBackward = getMovement(player).has("Backward");
 
     if (!db.HH && db.befJump && db.befWalk && db.jumpTick <= db.walkTick) {
         db.lastTimingTick = TimeDiff(db.jumpTick);
-        if (db.jumpTick === db.walkTick && !db.jam) {
+
+        if (db.jumpTick == db.walkTick && !db.jam) {
             db.jam = true;
             db.lastTiming = (isBackward ? "BW" : "") + "Jam";
         }
+
         if (db.lastTimingTick > 0 && !db.pessi && !db.jam) {
             db.pessi = true;
-            if (db.lastTimingTick <= 100) db.lastTiming = `Max Pessi [${db.lastTimingTick}ms]`;
-            else db.lastTiming = `Pessi ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+            db.lastTiming = db.lastTimingTick > 0 && db.lastTimingTick <= 100 
+                ? `Max Pessi [${db.lastTimingTick}ms]` 
+                : `Pessi ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
         }
+
         if (db.befSprinting && !db.sprint && !db.pessi && db.jam && db.jumpTick < db.sprintTick) {
             db.sprint = true;
             db.lastTiming = `FMM ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
@@ -117,15 +149,23 @@ function handleMovementStates(db: InitialDataType, player: Player) {
     } else if (!db.HH && !db.jam && !db.pessi && !db.sprint && db.befJump && db.befWalk && db.walkTick < db.jumpTick && !player.isFalling) {
         db.HH = true;
         db.lastTimingTick = TimeDiff(db.walkTick);
-        if (TimeDiff(db.walkTick) > 0) db.lastTiming = (isBackward ? "BW" : "") + `HH ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+        if (TimeDiff(db.walkTick) > 0) {
+            db.lastTiming = (isBackward ? "BW" : "") + `HH ${msToTicks(db.lastTimingTick).toFixed(2)} Ticks [${db.lastTimingTick}ms]`;
+        }
     }
 
-    if (movement.has("Still") && player.isOnGround && !db.befJump) {
-        resetMovementStates(db);
+    if (getMovement(player).has("Still") && player.isOnGround && !db.befJump) {
+        resetTimingState(db);
     }
+
+    if (db.tier == 10) {
+        db.ja = player.getRotation().y;
+    }
+
+    updateOffset(player, db);
 }
 
-function resetMovementStates(db: InitialDataType) {
+function resetTimingState(db: any) {
     db.HH = false;
     db.jam = false;
     db.sprint = false;
@@ -135,78 +175,153 @@ function resetMovementStates(db: InitialDataType) {
     db.lastTimingTick = 0;
 }
 
-function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3, vel: Vector3, rot: Vector2, isonground: boolean) {
+function updateOffset(player: Player, db: any) {
+    const pos = player.location;
+    const vel = player.getVelocity();
+    const isOnGround = player.isOnGround;
+
     if (pos.y <= db.lb.y && vel.y <= 0 && pos.y - vel.y > db.lb.y && -Math.abs(pos.x - db.lb.x - 0.5) + 0.8 >= -1 && -Math.abs(pos.z - db.lb.z - 0.5) + 0.8 >= -1 && !db.befLandLB && db.lbon) {
         db.befLandLB = true;
         db.osx = -Math.abs(pos.x - vel.x - db.lb.x - 0.5) + 0.8;
         db.osz = -Math.abs(pos.z - vel.z - db.lb.z - 0.5) + 0.8;
         db.os = Math.sqrt(db.osx ** 2 + db.osz ** 2) * ([db.osx, db.osz].some((os) => os < 0) ? -1 : 1);
 
-        if (db.sendos) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`, player);
-        if (db.sendosx) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset X: ${db.osx.toFixed(db.pTF)}`, player);
-        if (db.sendosz) print(`§${db.tc1}${db.prefix} §${db.tc2}Offset Z: ${db.osz.toFixed(db.pTF)}`, player);
+        printOffsets(player, db);
+
+        updatePersonalBests(db);
     }
 
-    if (db.lbon && isonground) db.befLandLB = false;
-
-    if (!db.lbon && !player.isOnGround) {
-        db.lbon = true;
-        db.lb = pos;
-    }
-
-    if (player.isOnGround && db.lbon) db.lbon = false;
-
-    if (isonground && !db.befLand) {
-        db.befLand = true;
-        db.pbx = db.hitx - pos.x;
-        db.pbz = db.hitz - pos.z;
-        db.pb = Math.sqrt(db.pbx ** 2 + db.pbz ** 2);
-
-        if (db.sendpb) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock: ${db.pb.toFixed(db.pTF)}`, player);
-        if (db.sendpbx) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock X: ${db.pbx.toFixed(db.pTF)}`, player);
-        if (db.sendpbz) print(`§${db.tc1}${db.prefix} §${db.tc2}Preblock Z: ${db.pbz.toFixed(db.pTF)}`, player);
+    if (pos.y > db.lb.y && db.befLandLB && !isOnGround) {
+        db.befLandLB = false;
     }
 }
 
-function getMovement(player: Player): Set<string> {
-    const movement = new Set<string>();
+function printOffsets(player: Player, db: any) {
+    if (db.sendos) {
+        print(`§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`, player);
+    }
+    if (db.sendosx) {
+        print(`§${db.tc1}${db.prefix} §${db.tc2}Offset X: ${db.osx.toFixed(db.pTF)}`, player);
+    }
+    if (db.sendosz) {
+        print(`§${db.tc1}${db.prefix} §${db.tc2}Offset Z: ${db.osz.toFixed(db.pTF)}`, player);
+    }
+}
+
+function updatePersonalBests(db: any) {
+    if (db.osx > db.pbx || !isFinite(db.pbx)) {
+        db.pbx = db.osx;
+        if (db.sendpbx) {
+            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`);
+        }
+    }
+
+    if (db.osz > db.pbz || !isFinite(db.pbz)) {
+        db.pbz = db.osz;
+        if (db.sendpbz) {
+            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`);
+        }
+    }
+
+    if (db.os > db.pb || !isFinite(db.pb)) {
+        db.pb = db.os;
+        if (db.sendpb) {
+            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb!: ${db.pb.toFixed(db.pTF)}`);
+        }
+    }
+}
+
+function updateGuiDisplay(player: Player, db: any) {
+    const pos = player.location;
+    const rot = player.getRotation();
+    const vel = player.getVelocity();
+    const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
+
+    const NA = (value: string | number) => (typeof value === "number" ? (isFinite(value) ? value.toFixed(db.pTF) : "N/A") : value);
+
+    type GUI = {
+        main: { labels: string[], conditions: boolean[] },
+        utils: { labels: string[], conditions: boolean[] }
+    };
+
+    const gui: GUI = {
+        main: {
+            labels: [
+                `§${db.tc1}X §${db.tc2}${pos.x.toFixed(db.pTF)} §${db.tc1}Y §${db.tc2}${pos.y.toFixed(db.pTF)} §${db.tc1}Z §${db.tc2}${pos.z.toFixed(db.pTF)}`,
+                `${db.showpit ? `§${db.tc1}P §${db.tc2}${rot.x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${rot.y.toFixed(db.rTF)}` : ""}`
+            ],
+            conditions: [db.showpos, db.showpit || db.showfac]
+        },
+        utils: {
+            labels: [
+                `§${db.tc1}JA §${db.tc2}${db.ja.toFixed(db.rTF)}`,
+                `§${db.tc1}Hit Angle §${db.tc2}${db.hita.toFixed(db.rTF)}`,
+                `\n`,
+                `§${db.tc1}Speed (b/t) §8[§${db.tc2}${vel.x.toFixed(db.pTF)}§8, §${db.tc2}${vel.y.toFixed(db.pTF)}§8, §${db.tc2}${vel.z.toFixed(db.pTF)}§8]`,
+                `§${db.tc1}Total Speed (X&Z) §${db.tc2}${fullVel.toFixed(db.pTF)}`,
+                `§${db.tc1}Tier §${db.tc2}${db.tier}`,
+                `§${db.tc1}Last landing §8[§${db.tc2}${db.landx.toFixed(db.pTF)}§8, §${db.tc2}${db.landy.toFixed(db.pTF)}§8, §${db.tc2}${db.landz.toFixed(db.pTF)}§8]`,
+                `§${db.tc1}Hit §8[§${db.tc2}${db.hitx.toFixed(db.pTF)}§8, §${db.tc2}${db.hity.toFixed(db.pTF)}§8, §${db.tc2}${db.hitz.toFixed(db.pTF)}§8]`,
+                `§${db.tc1}Offset §${db.tc2}${NA(db.os)} §${db.tc1}(X, Z) §8[§${db.tc2}${NA(db.osx)}§${db.tc1}§8, §${db.tc2}${NA(db.osz)}§8]`,
+                `§${db.tc1}PB §${db.tc2}${NA(db.pb)} §${db.tc1}(X, Z) §8[§${db.tc2}${NA(db.pbx)}§8, §${db.tc2}${NA(db.pbz)}§8]`,
+                `§${db.tc1}Last Turning §${db.tc2}${db.lastTurning.toFixed(db.rTF)}`,
+                `§${db.tc1}Last Timing §${db.tc2}${db.lastTiming}`
+            ],
+            conditions: [
+                db.showja,
+                db.showhita,
+                db.separateGui ? db.showja || db.showhita : db.showpos || db.showpit || db.showfac || db.showja || db.showhita,
+                db.showspeed,
+                db.showttspeed,
+                db.showtier,
+                db.showland,
+                db.showhit,
+                db.showos,
+                db.showpb,
+                db.showLastTurning,
+                db.showLastTiming
+            ]
+        }
+    };
+
+    if (db.separateGui) {
+        switch (db.idx) {
+            case 1:
+                db.idx = 2;
+                player.onScreenDisplay.setTitle("!&§r§f" + gui.main.labels.filter((l, i) => gui.main.conditions[i]).join("\n"));
+                break;
+            case 2:
+                db.idx = 1;
+                player.onScreenDisplay.setTitle("&!§r§f" + gui.utils.labels.filter((l, i) => gui.utils.conditions[i]).join("\n"));
+                break;
+        }
+    } else {
+        switch (db.idx) {
+            case 1:
+                db.idx = 2;
+                player.onScreenDisplay.setTitle("!&§r§f" + gui.main.labels.slice(2).filter((l, i) => gui.main.conditions.slice(2)[i]).join("\n"));
+                break;
+            case 2:
+                db.idx = 1;
+                player.onScreenDisplay.setTitle("&!§r§f" + gui.main.labels.concat(gui.utils.labels).filter((l, i) => gui.main.conditions.concat(gui.utils.conditions)[i]).join("\n"));
+                break;
+        }
+    }
+}
+
+function getMovement(player: Player) {
     const vel = player.getVelocity();
     const rot = player.getRotation();
+    const vec = new Vector(vel).rotateY(-rot.y).toFixed(1);
+    const dir = new Set<"Still" | "Left" | "Right" | "Up" | "Down" | "Forward" | "Backward">();
 
-    const forwardVelocity = vel.z * Math.cos(rot.y * (Math.PI / 180)) + vel.x * Math.sin(rot.y * (Math.PI / 180));
-    const sidewaysVelocity = vel.x * Math.cos(rot.y * (Math.PI / 180)) - vel.z * Math.sin(rot.y * (Math.PI / 180));
+    if (vec.lengthSqr === 0) return dir.add("Still");
+    if (vec.x > 0) dir.add("Left");
+    if (vec.x < 0) dir.add("Right");
+    if (vec.y > 0) dir.add("Up");
+    if (vec.y < 0) dir.add("Down");
+    if (vec.z > 0) dir.add("Forward");
+    if (vec.z < 0) dir.add("Backward");
 
-    if (forwardVelocity > 0) movement.add("Forward");
-    if (forwardVelocity < 0) movement.add("Backward");
-    if (sidewaysVelocity > 0) movement.add("Left");
-    if (sidewaysVelocity < 0) movement.add("Right");
-    if (forwardVelocity === 0 && sidewaysVelocity === 0) movement.add("Still");
-
-    return movement;
-}
-
-function renderPlayerGUI(db: InitialDataType, player: Player) {
-    const guiTitle = db.separateGui ? (db.idx === 1 ? "!&" : "&!") : "!&";
-    const guiLabels = getGUILabels(db, player);
-
-    player.onScreenDisplay.setTitle(`${guiTitle}§r§f${guiLabels.join("\n")}`);
-}
-
-function getGUILabels(db: InitialDataType, player: Player): string[] {
-    const labels: string[] = [];
-
-    if (db.showpos) {
-        labels.push(`§${db.tc1}X §${db.tc2}${player.location.x.toFixed(db.pTF)} §${db.tc1}Y §${db.tc2}${player.location.y.toFixed(db.pTF)} §${db.tc1}Z §${db.tc2}${player.location.z.toFixed(db.pTF)}`);
-    }
-
-    if (db.showpit || db.showfac) {
-        labels.push(
-            `${db.showpit ? `§${db.tc1}P §${db.tc2}${player.getRotation().x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${player.getRotation().y.toFixed(db.rTF)}` : ""}`
-        );
-    }
-
-    // Add other labels based on conditions
-    // Example: if (db.showja) { labels.push(`§${db.tc1}JA §${db.tc2}${db.ja.toFixed(db.rTF)}`); }
-
-    return labels;
+    return dir;
 }
