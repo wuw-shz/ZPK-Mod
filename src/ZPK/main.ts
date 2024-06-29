@@ -37,7 +37,7 @@ system.runInterval(() => {
         const vel = player.getVelocity();
         const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
-        updatePlayerState(player, db,);
+        updatePlayerState(player, db, );
         handleLandingState(player, db);
         handleMovementState(player, db, fullVel);
         updateGuiDisplay(player, db);
