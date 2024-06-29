@@ -231,7 +231,7 @@ function updatePersonalBests(db: InitialDataType, player: Player) {
     }
 }
 
-function handleMovementState(player: Player, db: any, fullVel: number) {
+function handleMovementState(player: Player, db: I, fullVel: number) {
     const currentMovement = getMovement(player);
 
     if (currentMovement.has("Forward") || currentMovement.has("Backward") || currentMovement.has("Left") || currentMovement.has("Right")) {
