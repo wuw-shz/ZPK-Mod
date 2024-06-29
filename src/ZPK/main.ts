@@ -63,7 +63,7 @@ function initializeOnGroundState(db: InitialDataType, pos: Vector3, vel: Vector3
     db.tier = 0;
 }
 
-function handleInAirState(db: PlayerData) {
+function handleInAirState(db: InitialDataType) {
     if (db.befLand) {
         db.tier = 10;
         if (!db.befJump) {
