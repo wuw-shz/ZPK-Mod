@@ -99,15 +99,7 @@ system.runInterval(() => {
     }
 });
 
-function updatePlayerState(
-    db: PlayerData,
-    player: Player,
-    pos: Vector3,
-    vel: Vector3,
-    rot: Vector3,
-    isonground: boolean,
-    fullvel: number
-) {
+function updatePlayerState(db: PlayerData, player: Player, pos: Vector3, vel: Vector3, rot: Vector3, isonground: boolean, fullvel: number) {
     if (isonground && !db.befLand) {
         initializeOnGroundState(db, pos, vel, rot);
     }
@@ -168,7 +160,9 @@ function getGUILabels(db: PlayerData): string[] {
     }
 
     if (db.showpit || db.showfac) {
-        labels.push(`${db.showpit ? `§${db.tc1}P §${db.tc2}${player.getRotation().x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${player.getRotation().y.toFixed(db.rTF)}` : ""}`);
+        labels.push(
+            `${db.showpit ? `§${db.tc1}P §${db.tc2}${player.getRotation().x.toFixed(db.rTF)}` : ""}${db.showpit && db.showfac ? " " : ""}${db.showfac ? `§${db.tc1}F §${db.tc2}${player.getRotation().y.toFixed(db.rTF)}` : ""}`
+        );
     }
 
     // Add other labels based on conditions
