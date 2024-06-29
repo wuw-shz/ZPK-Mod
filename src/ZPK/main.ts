@@ -1,4 +1,4 @@
-import { world, system, Player, Vector3 } from "@minecraft/server";
+import { world, system, Player, Vector3, Vector2 } from "@minecraft/server";
 import { Database, settingUI, zpkModOn, InitialDataType } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
@@ -38,7 +38,7 @@ system.runInterval(() => {
     }
 });
 
-function updatePlayerState(db: InitialDataType, player: Player, pos: Ve, vel: Vector3, rot: Vector3, isonground: boolean, fullvel: number) {
+function updatePlayerState(db: InitialDataType, player: Player, pos: Vector2, vel: Vector3, rot: Vector3, isonground: boolean, fullvel: number) {
     if (isonground && !db.befLand) {
         initializeOnGroundState(db, pos, vel, rot);
     }
