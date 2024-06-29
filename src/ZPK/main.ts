@@ -125,7 +125,7 @@ function handleMovementStates(db: PlayerData, player: Player) {
     }
 }
 
-function resetMovementStates(db: I) {
+function resetMovementStates(db: In) {
     db.HH = false;
     db.jam = false;
     db.sprint = false;
