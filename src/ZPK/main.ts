@@ -211,7 +211,7 @@ function updatePersonalBests(db: any) {
     if (db.osx > db.pbx || !isFinite(db.pbx)) {
         db.pbx = db.osx;
         if (db.sendpbx) {
-            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`);
+            print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`, player);
         }
     }
 
