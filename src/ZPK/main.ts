@@ -76,7 +76,7 @@ function handleInAirState(db: InitialDataType) {
     db.befLand = false;
 }
 
-function handleMovementStates(db: I, player: Player) {
+function handleMovementStates(db: In, player: Player) {
     const movement = getMovement(player);
     const worldTimeNow = worldTime.getTime();
     const isBackward = movement.has("Backward");
