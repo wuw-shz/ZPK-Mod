@@ -187,7 +187,7 @@ function updateOffset(player: Player, db: InitialDataType) {
 
         printOffsets(player, db);
 
-        updatePersonalBests(db);
+        updatePersonalBests(db,);
     }
 
     if (pos.y > db.lb.y && db.befLandLB && !isOnGround) {
