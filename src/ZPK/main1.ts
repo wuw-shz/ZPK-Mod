@@ -241,4 +241,30 @@ function getMovement(player: Player) {
     if (vec.z > 0) dir.add("Forward");
     if (vec.z < 0) dir.add("Backward");
     return dir;
+}// Extracted function to set title
+function setTitleFromGui(player: Player, gui: Gui) {
+    const labels = gui.main.labels.concat(gui.utils.labels);
+    const conditions = gui.main.conditions.concat(gui.utils.conditions);
+    const filteredLabels = labels.filter((_, i) => conditions[i]).join("\n");
+    player.onScreenDisplay.setTitle("&!§r§f" + filteredLabels);
+}
+
+// Simplified and improved getMovement function
+function getMovement(player: Player): Set<"Still" | "Left" | "Right" | "Up" | "Down" | "Forward" | "Backward"> {
+    const vel = player.getVelocity();
+    const rot = player.getRotation();
+    const vec = new Vector(vel).rotateY(-rot.y).toFixed(1);
+    const dir = new Set<"Still" | "Left" | "Right" | "Up" | "Down" | "Forward" | "Backward">();
+
+    if (vec.lengthSqr === 0) {
+        dir.add("Still");
+    } else {
+        if (vec.x > 0) dir.add("Left");
+        if (vec.x < 0) dir.add("Right");
+        if (vec.y > 0) dir.add("Up");
+        if (vec.y < 0) dir.add("Down");
+        if (vec.z > 0) dir.add("Forward");
+        if (vec.z < 0) dir.add("Backward");
+    }
+    return dir;
 }
