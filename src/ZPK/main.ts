@@ -86,7 +86,7 @@ function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3) {
 
 function renderPlayerGUI(db: InitialDataType, player: Player) {
     const guiTitle = db.separateGui ? (db.idx === 1 ? "!&" : "&!") : "!&";
-    const guiLabels = getGUILabels(db, player:);
+    const guiLabels = getGUILabels(db, player);
 
     player.onScreenDisplay.setTitle(`${guiTitle}§r§f${guiLabels.join("\n")}`);
 }
