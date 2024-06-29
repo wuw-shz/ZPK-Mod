@@ -91,7 +91,7 @@ function renderPlayerGUI(db: InitialDataType, player: Player) {
     player.onScreenDisplay.setTitle(`${guiTitle}§r§f${guiLabels.join("\n")}`);
 }
 
-function getGUILabels(db: PlayerData): string[] {
+function getGUILabels(db: InitialDataType): string[] {
     const labels: string[] = [];
 
     if (db.showpos) {
