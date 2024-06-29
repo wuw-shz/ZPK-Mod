@@ -76,6 +76,62 @@ function updatePlayerState(player: Player, db: InitialDataType) {
     updateMovementState(player, db, fullVel);
 }
 
+function handleMovementState(player: Player, db: any, fullVel: number) {
+    const currentMovement = getMovement(player);
+
+    if (currentMovement.has("Forward") || currentMovement.has("Backward") || currentMovement.has("Left") || currentMovement.has("Right")) {
+        if (!db.befWalk) {
+            db.befWalk = true;
+            db.walkTick = worldTime.getTime();
+        }
+    } else if (currentMovement.has("Still")) {
+        db.befWalk = false;
+    }
+
+    if (player.isSprinting && !db.befSprinting) {
+        db.befSprinting = true;
+        db.sprintTick = worldTime.getTime();
+    } else if (!player.isSprinting) {
+        db.befSprinting = false;
+    }
+
+    updateTiming(player, db, fullVel);
+}
+
+function handleLandingState(player: Player, db: any) {
+    const pos = player.location;
+    const vel = player.getVelocity();
+    const isOnGround = player.isOnGround;
+
+    if (pos.y <= db.lb.y && vel.y <= 0 && pos.y - vel.y > db.lb.y && -Math.abs(pos.x - db.lb.x - 0.5) + 0.8 >= -1 && -Math.abs(pos.z - db.lb.z - 0.5) + 0.8 >= -1 && !db.befLandLB && db.lbon) {
+        db.befLandLB = true;
+        db.osx = -Math.abs(pos.x - vel.x - db.lb.x - 0.5) + 0.8;
+        db.osz = -Math.abs(pos.z - vel.z - db.lb.z - 0.5) + 0.8;
+        db.os = Math.sqrt(db.osx ** 2 + db.osz ** 2) * ([db.osx, db.osz].some((os) => os < 0) ? -1 : 1);
+        db.sendos && print(`§${db.tc1}${db.prefix} §${db.tc2}Offset: ${db.os.toFixed(db.pTF)}`, player);
+        db.sendosx && print(`§${db.tc1}${db.prefix} §${db.tc2}Offset X: ${db.osx.toFixed(db.pTF)}`, player);
+        db.sendosz && print(`§${db.tc1}${db.prefix} §${db.tc2}Offset Z: ${db.osz.toFixed(db.pTF)}`, player);
+
+        if (db.osx > db.pbx || !isFinite(db.pbx)) {
+            db.pbx = db.osx;
+            db.sendpbx && print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! X: ${db.pbx.toFixed(db.pTF)}`, player);
+        }
+
+        if (db.osz > db.pbz || !isFinite(db.pbz)) {
+            db.pbz = db.osz;
+            db.sendpbz && print(`§${db.tc1}${db.prefix} §${db.tc2}New pb! Z: ${db.pbz.toFixed(db.pTF)}`, player);
+        }
+
+        if (db.os > db.pb || !isFinite(db.pb)) {
+            db.pb = db.os;
+            db.sendpb && print(`§${db.tc1}${db.prefix} §${db.tc2}New pb!: ${db.pb.toFixed(db.pTF)}`, player);
+        }
+    }
+
+    if (pos.y > db.lb.y && db.befLandLB && !isOnGround) {
+        db.befLandLB = false;
+    }
+}
 
 
 function updateLandingState(player: Player, db: InitialDataType, pos: Vector3, vel: Vector3, rot: { y: number }) {
