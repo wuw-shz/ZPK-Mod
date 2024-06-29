@@ -34,6 +34,7 @@ class Thread<T extends any[] = any[]> {
         threads.unshift(this);
         this.active = true;
         this.valid = false;
+
     }
 
     async join() {
