@@ -55,7 +55,7 @@ function alternateTitleDisplay(player: Player, db: InitialDataType) {
     }
 }
 
-function updatePlayerState(player: Player, db: InitialDataTypem ) {
+function updatePlayerState(player: Player, db: InitialDataTypem) {
     const pos = player.location;
     const rot = player.getRotation();
     const vel = player.getVelocity();
