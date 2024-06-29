@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.setBlockPermutation(location, BlockPermutation.resolve('minecr')
+        player.dimension.setBlockPermutation(location, BlockPermutation.resolve('minecraf')
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
