@@ -80,7 +80,7 @@ function handleMovementStates(db: InitialDataType, player: Player) {
     // Handle movement states here
 }
 
-function handleOffsetState(db: PlayerData, player: Player, pos: Vector3) {
+function handleOffsetState(db: InitialDataType, player: Player, pos: Vector3) {
     // Handle offset state here
 }
 
