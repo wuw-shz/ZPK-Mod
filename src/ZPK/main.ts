@@ -30,13 +30,14 @@ system.runInterval(() => {
     for (const player of world.getAllPlayers()) {
         const db = Database(player);
 
-        if (db.toggleZPKMod) {
-            const vel = player.getVelocity();
-            const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
+        if (!db.toggleZPKMod) {
+        const vel = player.getVelocity();
+        const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
             updateGuiDisplay(player, db);
-            updatePlayerState(player, db, fullVel);
-            handleLandingState(player, db);
-            handleMovementState(player, db, fullVel);
+
+        updatePlayerState(player, db, fullVel);
+        handleLandingState(player, db);
+        handleMovementState(player, db, fullVel);
             continue;
         }
     }
