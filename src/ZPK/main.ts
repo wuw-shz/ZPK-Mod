@@ -232,6 +232,7 @@ function updatePersonalBests(db: InitialDataType, player: Player) {
 }
 
 
+
 function updateGuiDisplay(player: Player, db: InitialDataType) {
     const pos = player.location;
     const rot = player.getRotation();
