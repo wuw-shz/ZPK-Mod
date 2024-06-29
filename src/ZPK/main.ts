@@ -31,7 +31,6 @@ system.runInterval(() => {
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
-            alternateTitleDisplay(player, db);
         updateGuiDisplay(player, db);
             continue;
         }
