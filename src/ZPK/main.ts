@@ -1,5 +1,5 @@
 import { world, system, Player, Vector3 } from "@minecraft/server";
-import { Database, settingUI, zpkModOn } from "@zpk";
+import { Database, InitialDataType, settingUI, zpkModOn } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
 /* Toggle ZPK Mod */
@@ -207,7 +207,7 @@ function printOffsets(player: Player, db: any) {
     }
 }
 
-function updatePersonalBests(db: Ini, player: Player) {
+function updatePersonalBests(db: InitialDataType, player: Player) {
     if (db.osx > db.pbx || !isFinite(db.pbx)) {
         db.pbx = db.osx;
         if (db.sendpbx) {
