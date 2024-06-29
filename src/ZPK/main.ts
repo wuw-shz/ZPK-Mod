@@ -4,7 +4,7 @@ import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
 /* Toggle ZPK Mod */
 
-const COMPASS_ID = "minecraft:compass";
+const ZPK_ITEM = "minecraft:compass";
 
 world.beforeEvents.itemUse.subscribe((data) => {
     if (!zpkModOn) return;
@@ -15,9 +15,9 @@ world.beforeEvents.itemUse.subscribe((data) => {
 
     if (!(player instanceof Player)) return;
 
-    if (item.typeId === COMPASS_ID && player.isSneaking) {
+    if (item.typeId === ZPK_ITEM && player.isSneaking) {
         db.toggleZPKMod = !db.toggleZPKMod;
-    } else if (item.typeId === COMPASS_ID) {
+    } else if (item.typeId === ZPK_ITEM) {
         settingUI(player);
     }
 });
