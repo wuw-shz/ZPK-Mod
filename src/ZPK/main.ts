@@ -1,6 +1,7 @@
 import { world, system, Player, Vector3 } from "@minecraft/server";
 import { Vector, print, startTime, Thread } from "@lib/minecraft";
 import { Database, InitialDataType, settingUI, zpkModOn } from "@zpk";
+import { Block } from "@library/minecraft/classes/blockBuilder";
 
 const ZPK_ITEM = "minecraft:compass";
 
