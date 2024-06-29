@@ -1,5 +1,5 @@
 import { world, system, Player } from "@minecraft/server";
-import { Database, settingUI, zpkModOn } from "@zpk";
+import { Database, settingUI, zpkModOnm } from "@zpk";
 import { Timer, Vector, print, startTime } from "@lib/minecraft";
 
 const worldTime = startTime();
