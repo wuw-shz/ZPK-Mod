@@ -76,7 +76,7 @@ function handleInAirState(db: InitialDataType) {
     db.befLand = false;
 }
 
-function handleMovementStates(db: PlayerData, player: Player) {
+function handleMovementStates(db: InitialDataType, player: Player) {
     // Handle movement states here
 }
 
