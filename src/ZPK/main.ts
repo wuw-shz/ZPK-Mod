@@ -29,16 +29,25 @@ system.runInterval(() => {
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
-            alternateTitleDisplay(player, db);
+            const alternateTask = async () => {
+                alternateTitleDisplay(player, db);
+            };
+            const alternateThread = new Thread();
+            alternateThread.start(alternateTask);
             continue;
         }
-        const vel = player.getVelocity();
-        const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
-        updatePlayerState(player, db, fullVel);
-        handleLandingState(player, db);
-        handleMovementState(player, db, fullVel);
-        updateGuiDisplay(player, db);
+        const updateTask = async () => {
+            const vel = player.getVelocity();
+            const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
+
+            updatePlayerState(player, db, fullVel);
+            handleLandingState(player, db);
+            handleMovementState(player, db, fullVel);
+            updateGuiDisplay(player, db);
+        };
+        const updateThread = new Thread();
+        updateThread.start(updateTask);
     }
 });
 
