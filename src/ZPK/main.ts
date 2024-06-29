@@ -27,7 +27,7 @@ system.runInterval(() => {
     if (!zpkModOn) return;
 
     for (const player of world.getAllPlayers()) {
-        player.dimension.setBlockPermutation(location, BlockPermutation.resolve('minecraft:stone')
+        player.dimension.f
         const db = Database(player);
 
         if (!db.toggleZPKMod) {
