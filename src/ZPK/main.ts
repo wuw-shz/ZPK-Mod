@@ -51,7 +51,7 @@ function updatePlayerState(db: InitialDataType, player: Player, pos: Vector3, ve
     handleOffsetState(db, player, pos);
 }
 
-function initializeOnGroundState(db: PlayerData, pos: Vector3, vel: Vector3, rot: Vector3) {
+function initializeOnGroundState(db: PlayerData, pos: Vector3, vel: Vector3, rot: Vector2) {
     db.befLand = true;
     db.landx = pos.x - vel.x;
     db.landy = pos.y - vel.y;
