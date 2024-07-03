@@ -1,1 +1,3 @@
-wo
+import { world } from "@minecraft/server";
+
+world.
