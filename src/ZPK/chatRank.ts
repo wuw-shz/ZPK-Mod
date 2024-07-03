@@ -1,4 +1,4 @@
-import { Server } from "@to";
+import { Server } from "@t";
 import { world } from "@minecraft/server";
 
 world.beforeEvents.chatSend.subscribe((ev) => {
