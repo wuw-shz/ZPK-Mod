@@ -1,3 +1,5 @@
 import { world } from "@minecraft/server";
 
-world.beforeEvents.chatSend.subscribe(ev => [])
+world.beforeEvents.chatSend.subscribe(ev => {
+   
+})
