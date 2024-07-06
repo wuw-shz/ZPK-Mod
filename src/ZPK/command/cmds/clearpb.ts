@@ -5,7 +5,9 @@ const regInfo: CommandInfo = {
     name: "clearpb",
     description: "Clear pb and offset.",
     aliases: ["cpb"],
-    usage: [],
+    usage: [
+        
+    ],
 };
 
 registerCommand(regInfo, (player) => {
