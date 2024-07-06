@@ -40,7 +40,7 @@ export class CommandPosition implements CustomArgType {
             }
             const val = arg == "" ? 0 : parseFloat(arg);
             if (val != val || isNaN(val)) {
-                throw RawText.translate("commands.generic.num.invalid").with(arg);
+                // throw RawText.translate("commands.generic.num.invalid").with(arg);
             }
 
             if (i == 0) {
