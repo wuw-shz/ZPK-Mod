@@ -8,6 +8,7 @@ const regInfo: CommandInfo = {
     aliases: ["slb", "sb"],
     usage: [{
         name: "pos",
+        
     },{ name: "target", type: "string", default: "" }],
 };
 
