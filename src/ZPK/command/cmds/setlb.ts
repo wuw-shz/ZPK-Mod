@@ -34,3 +34,4 @@ registerCommand(regInfo, (player, msg, args) => {
         print(`§l§c✘ Invalid target input! Using "${cmdPrefix}setlb [target, tg]"`, player);
     }
 });
+
