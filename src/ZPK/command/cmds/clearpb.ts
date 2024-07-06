@@ -8,7 +8,7 @@ const regInfo: CommandInfo = {
     usage: [{ flag: "sl" }],
 };
 
-registerCommand(regInfo, (player, ms) => {
+registerCommand(regInfo, (player, msg) => {
     const db = Database(player);
     db.os = Infinity;
     db.osx = Infinity;
