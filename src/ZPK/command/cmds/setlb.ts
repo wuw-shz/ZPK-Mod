@@ -28,6 +28,6 @@ registerCommand(regInfo, (player, msg, args) => {
     }
 });
 
-fupositionFormat(pos: string) {
+funpositionFormat(pos: string) {
     return pos.match(/(\^|~)(-?\.?\d+|\d?)|(?<=\s)-?\.?\d+/g);
   }
