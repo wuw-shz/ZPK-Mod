@@ -1,8 +1,0 @@
-import { Server } from "@to";
-import { world } from "@minecraft/server";
-
-world.beforeEvents.chatSend.subscribe((ev) => {
-    const pl = ev.sender;
-    const msg = ev.message;
-    Server
-});
