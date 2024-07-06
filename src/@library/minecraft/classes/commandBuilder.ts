@@ -21,6 +21,7 @@ export class CommandPosition implements CustomArgType {
     zRelative = true;
 
     static parseArgs(args: Array<string>, index: number, is3d = true) {
+        
         const pos = new CommandPosition();
         for (let i = 0; i < (is3d ? 3 : 2); i++) {
             let arg = args[index];
