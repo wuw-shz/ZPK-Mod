@@ -7,7 +7,7 @@ const regInfo: CommandInfo = {
     description: "Set lb.",
     aliases: ["slb", "sb"],
     usage: [{
-        name: ""
+        name: "p"
     },{ name: "target", type: "string", default: "" }],
 };
 
