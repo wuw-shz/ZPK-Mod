@@ -7,6 +7,11 @@ const regInfo: CommandInfo = {
     description: "Set lb.",
     aliases: ["slb", "sb"],
     usage: [
+        {
+            name: "pos",
+            type: "xyz",
+            default: "~ ~ ~",
+        },
         { subName: "tg" },
     ],
 };
