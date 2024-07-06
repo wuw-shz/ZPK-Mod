@@ -1,5 +1,5 @@
 import { CommandInfo, print } from "@lib/minecraft";
-import { registerCommand, Database } from "@zpk";
+import { registeComrmand, Database } from "@zpk";
 
 const regInfo: CommandInfo = {
     name: "clearpb",
