@@ -28,6 +28,6 @@ registerCommand(regInfo, (player, msg, args) => {
     }
 });
 
-functionpositionFormat(pos: string) {
+function positionFormat(pos: string) {
     return pos.match(/(\^|~)(-?\.?\d+|\d?)|(?<=\s)-?\.?\d+/g);
   }
