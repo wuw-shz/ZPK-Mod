@@ -16,7 +16,7 @@ const regInfo: CommandInfo = {
 
 registerCommand(regInfo, (player, msg, args) => {
     const db = Database(player);
-    world.w
+    world.we
     if (args.get("target") === "") {
         const pos = player.location;
         db.lbon = true;
