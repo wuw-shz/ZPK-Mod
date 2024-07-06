@@ -6,9 +6,7 @@ const regInfo: CommandInfo = {
     name: "setlb",
     description: "Set lb.",
     aliases: ["slb", "sb"],
-    usage: [
-        { name: "target", type: "string", default: '' },
-    ],
+    usage: [{ name: "target", type: "string", default: "" }],
 };
 
 registerCommand(regInfo, (player, msg, args) => {
