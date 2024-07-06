@@ -1,4 +1,5 @@
 import { CommandInfo, CommandPosition, print, Server, Vector } from "@lib/minecraft";
+import { world } from "@minecraft/server";
 import { registerCommand, Database, cmdPrefix } from "@zpk";
 const vec3 = (x: number, y: number, z: number) => new Vector(x, y, z);
 
@@ -15,7 +16,7 @@ const regInfo: CommandInfo = {
 
 registerCommand(regInfo, (player, msg, args) => {
     const db = Database(player);
-    world
+    world.
     if (args.get("target") === "") {
         const pos = player.location;
         db.lbon = true;
