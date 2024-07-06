@@ -17,5 +17,6 @@ registerCommand(regInfo, (player) => {
     db.pb = Infinity;
     db.pbx = Infinity;
     db.pbz = Infinity;
+    
     print("§l§a✔ Clear pb and offset!", player);
 });
