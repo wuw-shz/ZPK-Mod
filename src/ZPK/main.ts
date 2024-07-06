@@ -42,7 +42,7 @@ system.runInterval(() => {
             const vel = player.getVelocity();
             const fullVel = Math.sqrt(vel.x ** 2 + vel.z ** 2);
 
-            yield updatePlayerState(player, db, fullVel); // Assuming updatePlayerState is a generator function
+            yield updatePlayerState(player, db, fullVel);
             yield handleLandingState(player, db);
             yield handleMovementState(player, db, fullVel);
             yield updateGuiDisplay(player, db);
