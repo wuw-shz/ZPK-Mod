@@ -6,7 +6,7 @@ const regInfo: CommandInfo = {
     description: "Clear pb and offset.",
     aliases: ["cpb"],
     usage: [
-        {flag: 'si'}
+        {flag: 'sil'}
     ],
 };
 
