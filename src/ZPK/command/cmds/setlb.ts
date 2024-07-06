@@ -23,7 +23,7 @@ registerCommand(regInfo, (player, msg, args) => {
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
         Server.command.callCommand(player, "clearpb");
         print(`§l§a✔ Set lb here! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
-    } else if (args.get('target') ) {} else{
+    } else if (args.get('target') =) {} else{
         print(`§l§c✘ Invalid target input! Using "${cmdPrefix}setlb [target, tg]"`, player);
     }
 });
