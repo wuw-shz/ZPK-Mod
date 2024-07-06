@@ -10,9 +10,9 @@ const regInfo: CommandInfo = {
         {
             name: "pos",
             type: "xyz",
+            { name: "target", type: "string", default: "" },
             default: "~ ~ ~"
         },
-        { name: "target", type: "string", default: "" },
     ],
 };
 
