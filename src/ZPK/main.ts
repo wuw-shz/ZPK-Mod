@@ -31,7 +31,7 @@ system.runInterval(() => {
 
         if (!db.toggleZPKMod) {
             const alternateTask = function* () {
-                yield alternateTitleDisplay(player, db);ator function
+                yield alternateTitleDisplay(player, db);
             };
             const alternateThread = new Thread();
             alternateThread.start(alternateTask);
