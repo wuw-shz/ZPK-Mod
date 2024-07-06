@@ -45,7 +45,7 @@ system.runInterval(() => {
             yield updatePlayerState(player, db, fullVel); // Assuming updatePlayerState is a generator function
             yield handleLandingState(player, db); // Assuming handleLandingState is a generator function
             yield handleMovementState(player, db, fullVel); // Assuming handleMovementState is a generator function
-            yield updateGuiDisplay(player, db); // Assuming updateGuiDisplay is a generator function
+            yield updateGuiDisplay(player, db);
         };
         const updateThread = new Thread();
         updateThread.start(updateTask);
