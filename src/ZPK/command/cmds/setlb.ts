@@ -11,7 +11,7 @@ const regInfo: CommandInfo = {
 
 registerCommand(regInfo, (player, msg, args) => {
     const db = Database(player);
-    if (["target", "tg"].includes(args.get("target") as string)) {
+    if () {
         const pos = player.location;
         db.lbon = true;
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
