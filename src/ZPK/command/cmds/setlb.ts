@@ -23,7 +23,7 @@ registerCommand(regInfo, (player, msg, args) => {
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
         Server.command.callCommand(player, "clearpb", ["-s"]);
         print(`§l§a✔ Set lb here! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
-    } else if (["target", "tg"].includes(args.get("target") as string) && !) {
+    } else if (["target", "tg"].includes(args.get("target") as string) && !a) {
         const target = player.getBlockFromViewDirection().block;
         db.lbon = true;
         db.lb = vec3(Math.floor(target.x), target.y + 1, Math.floor(target.z));
