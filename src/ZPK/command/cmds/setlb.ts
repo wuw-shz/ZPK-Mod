@@ -21,14 +21,14 @@ registerCommand(regInfo, (player, msg, args) => {
         const pos = CommandPosition.parseArgs(positionFormat(args.get("target") as string), 0).result.relativeTo(player, true);
         db.lbon = true;
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
+        Server.command.callCommand(player, "clearpb");
+        print(`§l§a✔ Set lb here! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
+    } else if (["target", "tg"].includes(args.get("target") as string)) {
         const target = player.getBlockFromViewDirection().block;
         db.lbon = true;
         db.lb = vec3(Math.floor(target.x), target.y + 1, Math.floor(target.z));
         Server.command.callCommand(player, "clearpb");
         print(`§l§a✔ Set lb target block! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
-        Server.command.callCommand(player, "clearpb");
-        print(`§l§a✔ Set lb here! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
-    } else if (["target", "tg"].includes(args.get("target") as string)) {
     } else {
         print(`§l§c✘ Invalid target input! Using "${cmdPrefix}setlb [target, tg]"`, player);
     }
