@@ -12,11 +12,6 @@ const regInfo: CommandInfo = {
 registerCommand(regInfo, (player, msg, args) => {
     const db = Database(player);
     if (["target", "tg"].includes(args.get("target") as string)) {
-        const target = player.getBlockFromViewDirection().block;
-        db.lbon = true;
-        db.lb = vec3(Math.floor(target.x), target.y + 1, Math.floor(target.z));
-        Server.command.callCommand(player, "clearpb");
-        print(`§l§a✔ Set lb target block! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
         const pos = player.location;
         db.lbon = true;
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
