@@ -1,4 +1,4 @@
-import { CommandInfo, print, Server, Vector } from "@lib/minecraft";
+import { CommandInfo, CommandPosition, print, Server, Vector } from "@lib/minecraft";
 import { registerCommand, Database, cmdPrefix } from "@zpk";
 const vec3 = (x: number, y: number, z: number) => new Vector(x, y, z);
 
@@ -17,7 +17,7 @@ registerCommand(regInfo, (player, msg, args) => {
         db.lb = vec3(Math.floor(target.x), target.y + 1, Math.floor(target.z));
         Server.command.callCommand(player, "clearpb");
         print(`§l§a✔ Set lb target block! at (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
-    } else if (Comm) {
+    } else if (CommandPosition) {
         const pos = player.location;
         db.lbon = true;
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
