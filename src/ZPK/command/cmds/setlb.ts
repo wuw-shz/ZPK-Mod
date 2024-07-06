@@ -27,7 +27,7 @@ registerCommand(regInfo, (player, msg, args) => {
         const pos = CommandPosition.parseArgs(positionFormat(args.get("target") as string), 0).result.relativeTo(player, true);
         db.lbon = true;
         db.lb = vec3(Math.floor(pos.x), pos.y, Math.floor(pos.z));
-        Server.command.callCommand(player, "clearpb", ["-sl"]);
+        Server.command.callCommand(player, "clearpb", ["-s"]);
         print(`§l§a✔ Set lb! at pos (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
     } else {
         print(`§l§c✘ Invalid target input! Using "${cmdPrefix}setlb [target, tg]"`, player);
