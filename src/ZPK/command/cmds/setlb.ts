@@ -36,7 +36,7 @@ registerCommand(regInfo, (player, msg, args) => {
         Server.command.callCommand(player, "clearpb", ["-s"]);
         print(`§l§a✔ Set lb! at pos (${db.lb.x}, ${db.lb.y}, ${db.lb.z})`, player);
     } else {
-        print(`§l§c✘ Invalid setlb command input!\nUsage:\"${cmdPrefix}setlb <targetBlock: "target" or "tg">"\n"${cmdPrefix}setlb <position: x y z>"`, player);
+        print(`§l§c✘ Invalid setlb command input!\nUsage:\n"${cmdPrefix}setlb <targetBlock: "target" or "tg">"\n"${cmdPrefix}setlb <position: x y z>"`, player);
     }
 });
 
