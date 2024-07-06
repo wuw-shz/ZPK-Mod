@@ -11,7 +11,7 @@ const regInfo: CommandInfo = {
         {
             name: "pos",
             type: "xyz",
-            default: "~ ~ ~"
+            default: "~ ~ ~",
         },
     ],
 };
@@ -34,4 +34,3 @@ registerCommand(regInfo, (player, msg, args) => {
         print(`§l§c✘ Invalid target input! Using "${cmdPrefix}setlb [target, tg]"`, player);
     }
 });
-
