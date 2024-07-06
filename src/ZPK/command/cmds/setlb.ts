@@ -9,7 +9,7 @@ const regInfo: CommandInfo = {
     usage: [
         { name: "target", type: "string", default: "" },
         { name: "pos2", type: "string", default: "" },
-        { name: "pos", type: "string", default: "" },
+        { name: "pos3", type: "string", default: "" },
     ],
 };
 
