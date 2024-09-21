@@ -1,3 +1,3 @@
 @echo off
 
-bun run dev
+call npm run dev

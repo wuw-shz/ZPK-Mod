@@ -4,3 +4,4 @@ import "./cmds/setlb";
 import "./cmds/clearlb";
 import "./cmds/clearpb";
 import "./cmds/setting";
+import "./cmds/save"

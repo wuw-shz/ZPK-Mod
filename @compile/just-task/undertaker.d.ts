@@ -1,0 +1,7 @@
+import { Task } from 'just-task';
+import Undertaker = require('undertaker');
+declare const undertaker: Undertaker;
+export declare function parallel(...tasks: Task[]): Undertaker.TaskFunction;
+export declare function series(...tasks: Task[]): Undertaker.TaskFunction;
+export { undertaker };
+//# sourceMappingURL=undertaker.d.ts.map

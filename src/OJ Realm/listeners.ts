@@ -1,5 +1,5 @@
 import * as server from "@minecraft/server";
-import { Mode, Database } from "@oj-realm";
+import { Mode, DatabaseOJR } from "@oj-realm";
 
 server.world.afterEvents.worldInitialize.subscribe(initData => {
     // const def = new server.DynamicPropertiesDefinition();
@@ -20,7 +20,7 @@ server.system.beforeEvents.watchdogTerminate.subscribe(watchDog => {
     console.warn('Initializing database...');
     server.system.runInterval(() => {
         server.world.getAllPlayers().forEach(pl => {
-            const db = new Database(pl);
+            const db = new DatabaseOJR(pl);
             try {
                 if (!db.has(Mode.coordinatorToggle))
                     db.set(Mode.coordinatorToggle, false);

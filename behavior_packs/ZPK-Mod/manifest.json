@@ -1,0 +1,41 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "ZPK Mod [BEH] 6.0.3",
+    "description": "\u00a7b@Zetaser_jtz \u00a7r| \u00a7b@wuw.sh\n\u00a7rA mod for one jump practice.\n\u00a74Need open Beta APIs\n\u00a7aSend \u00a7f\".about\" in chat to get info\n\u00a7eYou can modify this add-on, but please indicate the original author",
+    "uuid": "a3a6d0b1-59a6-437c-8bd5-cbdf7ed1a9c4",
+    "version": [6, 0, 2],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "description": "item and entity definitions",
+      "type": "data",
+      "uuid": "e87b7284-523c-422a-8502-8a8fb1636586",
+      "version": [1, 0, 0]
+    },
+    {
+      "description": "@minecraft/server | @minecraft/server-ui",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "656bef7e-81c7-4179-b639-21ff6850d10e",
+      "version": [1, 0, 0],
+      "entry": "scripts/zpk.js"
+    }
+  ],
+  "capabilities": ["script_eval"],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.15.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.4.0-beta"
+    }
+  ],
+  "metadata": {
+    "authors": ["wuw.sh"],
+    "license": "MIT"
+  }
+}

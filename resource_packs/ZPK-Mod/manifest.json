@@ -1,0 +1,21 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "ZPK Mod [RES] 6.0.3",
+    "description": "\u00a7b@Zetaser_jtz \u00a7r| \u00a7b@wuw.sh\n\u00a7rA mod for one jump practice.\n\u00a74Need open Beta APIs\n\u00a7aSend \u00a7f\".about\" in chat to get info\n\u00a7eYou can modify this add-on, but please indicate the original author",
+    "uuid": "18c5303f-f1d1-4800-8037-22fc9304cf73",
+    "version": [6, 0, 2],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "0bc3110e-5679-451d-92a8-4f8ff8fc0fc0",
+      "version": [1, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["wuw.sh"],
+    "license": "MIT"
+  }
+}

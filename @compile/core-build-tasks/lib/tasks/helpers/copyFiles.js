@@ -1,0 +1,27 @@
+"use strict";
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.copyFiles = void 0;
+const node_core_library_1 = require("@rushstack/node-core-library");
+const path_1 = __importDefault(require("path"));
+function copyFiles(originPaths, outputPath) {
+    let destinationPath = path_1.default.resolve(outputPath);
+    for (const originPath of originPaths) {
+        const inputPath = path_1.default.resolve(originPath);
+        const pathStats = node_core_library_1.FileSystem.getLinkStatistics(inputPath);
+        if (!pathStats.isDirectory())  {
+            const filename = path_1.default.parse(inputPath).base;
+            destinationPath = path_1.default.resolve(destinationPath, filename);
+        }
+        node_core_library_1.FileSystem.copyFiles({
+            sourcePath: inputPath,
+            destinationPath: destinationPath,
+        });
+    }
+}
+exports.copyFiles = copyFiles;
+//# sourceMappingURL=copyFiles.js.map
